@@ -8,8 +8,8 @@ Imports System.Windows.Forms
 
 Namespace BasicPlugIn
     <Plugin("NavisPlugin",                                      ' Plugin name
-            "ADSK",                                             ' 4 character Developer ID or GUID
-            ToolTip:="BasicPlugIn.ABasicPlugin tool tip",       ' The tooltip for the item in the ribbon
+            "CAPS",                                             ' 4 character Developer ID or GUID
+            ToolTip:="UNISA",       ' The tooltip for the item in the ribbon
             DisplayName:="Extract Properties Plugin")>          ' Display name for the Plugin in the Ribbon
     Public Class ABasicPlugin
         Inherits AddInPlugin                                    ' Derives from AddInPlugin
@@ -43,8 +43,6 @@ Namespace BasicPlugIn
             Return output
         End Function
 
-
-
         Public Overrides Function Execute(ParamArray parameters() As String) As Integer
 
             ' Initialize a variable to hold the selected folder path
@@ -74,6 +72,7 @@ Namespace BasicPlugIn
             Catch ex As Exception
                 MessageBox.Show("An error occurred during CSV export: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
+
             Return 0
         End Function
     End Class
@@ -90,7 +89,6 @@ Namespace BasicPlugIn
 
                 ' Allow the user to create new folders
                 folderBrowser.ShowNewFolderButton = True
-
 
                 ' Show the dialog and check if the user clicked OK
                 If folderBrowser.ShowDialog() = DialogResult.OK Then
