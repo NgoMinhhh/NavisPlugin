@@ -5,6 +5,9 @@ Imports Autodesk.Navisworks.Api.DocumentParts
 Imports System.Text
 Imports System.IO
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.FileIO
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Header
+Imports Autodesk.Navisworks.Api.Interop
 
 Namespace NavisPlugin
 #Region "ExtractProperties"
@@ -105,7 +108,21 @@ Namespace NavisPlugin
         Inherits AddInPlugin
 
         Public Overrides Function Execute(ParamArray parameters() As String) As Integer
-            Throw New NotImplementedException()
+            Dim CsvFilePath As String = GetCsvFilePath()
+            If CsvFilePath Is String.Empty Then
+                MessageBox.Show("No CSV file is chosen!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return 0
+            End If
+
+            Try
+                Dim elementList As List(Of VerifiedElement) = IngestCsv(CsvFilePath)
+                For Each element In elementList
+                    Debug.Print(element.ToString())
+                Next
+            Catch ex As Exception
+                MessageBox.Show("An error when reading has occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+            Return 0
         End Function
 
         Private Function GetCsvFilePath() As String
@@ -121,6 +138,69 @@ Namespace NavisPlugin
                 End If
             End Using
         End Function
+
+        Private Class VerifiedElement
+            ' Custom class to store only neccessary info from csv
+            Public Property GUID As String
+            Public Property LOD As String
+            Public Property MissingProperties As String
+            Public Overrides Function ToString() As String
+                Return $"GUID: {GUID}, LOD: {LOD}, Missing Properties: {MissingProperties}"
+            End Function
+        End Class
+
+        Private Function IngestCsv(CsvFilePath As String) As List(Of VerifiedElement)
+            Dim elementList As New List(Of VerifiedElement)()
+            Dim failList As New StringBuilder
+            ' Initialize the TextFieldParser
+            Using parser As New TextFieldParser(CsvFilePath)
+                parser.TextFieldType = FieldType.Delimited
+                parser.SetDelimiters(",") ' Set delimiter to comma
+                parser.HasFieldsEnclosedInQuotes = True ' Handle quoted fields
+
+                ' Check if file has content
+                If parser.EndOfData Then
+                    Throw New Exception("CSV file is empty")
+                End If
+
+                ' Read the header line
+                Dim headers As String() = parser.ReadFields()
+                Dim guidIndex As Integer = Array.IndexOf(headers, "Item.GUID")
+                Dim lodIndex As Integer = Array.IndexOf(headers, "LOD")
+                Dim missingPropsIndex As Integer = Array.IndexOf(headers, "Missing_Properties")
+
+                ' Check that all required columns are present
+                If guidIndex = -1 OrElse lodIndex = -1 OrElse missingPropsIndex = -1 Then
+                    Throw New Exception("CSV file does not contain the required headers: Item.GUID, LOD, Missing_Properties.")
+                End If
+
+                While Not parser.EndOfData
+                    Try
+                        Dim fields As String() = parser.ReadFields()
+                        ' Ensure the line has enough fields
+                        If fields.Length > Math.Max(guidIndex, Math.Max(lodIndex, missingPropsIndex)) Then
+                            Dim item As New VerifiedElement() With {
+                                .GUID = fields(guidIndex).Trim(),
+                                .LOD = fields(lodIndex).Trim(),
+                                .MissingProperties = fields(missingPropsIndex).Trim()
+                            }
+                            elementList.Add(item)
+                        Else
+                            ' Add line with insufficient fields to fail list
+                            failList.Append("Line " & parser.LineNumber - 1)
+                        End If
+                    Catch ex As MalformedLineException
+                        failList.Append("Line " & ex.Message)
+                    End Try
+                End While
+            End Using
+            ' Display failed lines
+            If Not String.IsNullOrEmpty(failList.ToString()) Then
+                MessageBox.Show("List of failed lines: " & failList.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+            Return elementList
+        End Function
+
     End Class
 #End Region
 End Namespace
