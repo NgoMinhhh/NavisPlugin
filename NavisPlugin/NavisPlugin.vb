@@ -97,6 +97,30 @@ Namespace NavisPlugin
     End Class
 #End Region
 #Region "CreateSelectionSet"
+    <Plugin("CreateSelectionSet",
+            "UNISA",
+            ToolTip:="Create a selection set from GUIDs of processed elements",
+            DisplayName:="Create a selection set")>
+    Public Class CreateSelectionSetPlugin
+        Inherits AddInPlugin
 
+        Public Overrides Function Execute(ParamArray parameters() As String) As Integer
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function GetCsvFilePath() As String
+            Using openFileDialog As New OpenFileDialog()
+                openFileDialog.Title = "Select CSV File Containing GUIDs"
+                openFileDialog.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+
+                If openFileDialog.ShowDialog() = DialogResult.OK Then
+                    Return openFileDialog.FileName
+                Else
+                    Return String.Empty
+                End If
+            End Using
+        End Function
+    End Class
 #End Region
 End Namespace
