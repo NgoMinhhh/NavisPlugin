@@ -6,12 +6,12 @@ Imports System.Text
 Imports System.IO
 Imports System.Windows.Forms
 
-Namespace BasicPlugIn
-    <Plugin("NavisPlugin",                                      ' Plugin name
+Namespace ExtractPropertiesPlguin
+    <Plugin("ExtractPropertiesPlguin",                                      ' Plugin name
             "CAPS",                                             ' 4 character Developer ID or GUID
             ToolTip:="UNISA",       ' The tooltip for the item in the ribbon
             DisplayName:="Extract Properties Plugin")>          ' Display name for the Plugin in the Ribbon
-    Public Class ABasicPlugin
+    Public Class ExtractPropertiesPlguin
         Inherits AddInPlugin                                    ' Derives from AddInPlugin
 
         Public Function ExtractDataProperties() As List(Of String)
