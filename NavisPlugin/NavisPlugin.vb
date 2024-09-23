@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.FileIO
 Namespace NavisPlugin
 #Region "ExtractProperties"
     <Plugin("ExtractProperties",                                      ' Plugin name
-            "UNISA",                                             ' 4 character Developer ID or GUID
+            "CAPS",                                             ' 4 character Developer ID or GUID
             ToolTip:="Extract all properties from selected elements",       ' The tooltip for the item in the ribbon
             DisplayName:="Extract Properties")>          ' Display name for the Plugin in the Ribbon
     Public Class ExtractPropertiesPlguin
@@ -98,7 +98,7 @@ Namespace NavisPlugin
 #End Region
 #Region "CreateSelectionSet"
     <Plugin("CreateSelectionSet",
-        "UNISA",
+        "CAPS",
         ToolTip:="Create a selection set from GUIDs of processed elements",
         DisplayName:="Create a selection set")>
     Public Class CreateSelectionSetPlugin
