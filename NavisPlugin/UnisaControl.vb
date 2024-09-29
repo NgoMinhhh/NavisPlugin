@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Data.Common
+Imports System.IO
 Imports System.Text
 Imports System.Windows.Forms
 Imports Autodesk.Navisworks.Api
@@ -70,7 +71,7 @@ Public Class UnisaControl
         txbInfo.Text = textboxContent
     End Sub
 
-    Private Sub btnLoadCsv_MouseUp(sender As Object, e As MouseEventArgs) Handles btnLoadCsv.MouseUp
+    Private Sub btnLoadCsv_MouseUp(sender As Object, e As MouseEventArgs)
         Dim CsvFilePath As String = GetCsvFilePath()
         If CsvFilePath Is String.Empty Then
             MessageBox.Show("No CSV file is chosen!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -314,4 +315,56 @@ Module LoadCsv
     End Function
 
 End Module
+#End Region
+#Region "Extract Properties"
+Module ExtractProperties
+
+    ReadOnly AvailableType As New Dictionary(Of String, List(Of (Cat As String, Prop As String))) From {
+    {"Basic Wall", New List(Of (Cat As String, Prop As String)) From {
+        ("Revit Type", "Width"),
+        ("Revit Type", "AUR_MATERIAL_TYPE"),
+        ("Item", "Material"),
+        ("Element", "Area"),
+        ("Element", "Unconnected Height"),
+        ("Element", "Length"),
+        ("Element", "Id")
+    }},
+    {"Roof", New List(Of (Cat As String, Prop As String)) From {
+        ("Element", "Thickness"),
+        ("Element", "Slope")
+    }}}
+
+
+    Public Function GetAllElements(ExtractPath As String) As ModelItemCollection
+        Dim newCollection As New ModelItemCollection()
+
+        ' Add all child items into a new collection
+        For Each modelItem In Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
+            newCollection.AddRange(modelItem.Descendants)
+        Next
+
+        For Each element In newCollection
+            If Not element.IsComposite Then
+                Continue For
+            End If
+
+            If Not AvailableType.ContainsKey(element.ClassDisplayName) Then
+                Continue For
+            End If
+
+            Dim output As New StringBuilder()
+            For Each propPair In AvailableType(element.ClassDisplayName)
+                output.Append(element.PropertyCategories.FindPropertyByDisplayName(propPair.Cat, propPair.Prop).Value)
+            Next
+
+        Next
+
+
+            Return newCollection
+    End Function
+
+
+End Module
+
+
 #End Region

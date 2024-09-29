@@ -399,3 +399,82 @@ Namespace UnisaDockPaneAddin
         End Function
     End Class
 End Namespace
+
+#Region "Test Plugin"
+Namespace TestPlugin
+    <Plugin("TestPlugin",                                      ' Plugin name
+            "CAPS",                                             ' 4 character Developer ID or GUID
+            ToolTip:="Extract all properties from selected elements",       ' The tooltip for the item in the ribbon
+            DisplayName:="Extract Properties")>          ' Display name for the Plugin in the Ribbon
+    Public Class TestPlguin
+        Inherits AddInPlugin
+
+        ReadOnly AvailableType As New Dictionary(Of String, List(Of (Cat As String, Prop As String))) From {
+        {"Wall", New List(Of (Cat As String, Prop As String)) From {
+            ("Item", "GUID"),
+            ("Document", "Title"),
+            ("Revit Type", "Width"),
+            ("Revit Type", "AUR_MATERIAL_TYPE"),
+            ("Item", "Material"),
+            ("Element", "Area"),
+            ("Element", "Unconnected Height"),
+            ("Element", "Length"),
+            ("Element", "Id")
+        }},
+        {"Basic Roof", New List(Of (Cat As String, Prop As String)) From {
+            ("Element", "Thickness"),
+            ("Element", "Slope")
+        }}
+        }
+        Public Overrides Function Execute(ParamArray parameters() As String) As Integer
+            Dim newCollection As New ModelItemCollection()
+
+            ' Add all child items into a new collection
+            For Each modelItem In Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
+                newCollection.AddRange(modelItem.Descendants)
+            Next
+
+            Dim output As New StringBuilder()
+            For Each element In newCollection
+                ' Check for valid element icon
+                If Not element.IsComposite Then
+                    Continue For
+                End If
+
+                ' Check if element type is supported
+                Dim supportedCat As String
+                For Each key In AvailableType.Keys
+                    Try
+                        Dim elementCat As String = element.PropertyCategories.FindPropertyByDisplayName("Element", "Category").Value.ToString()
+                        If InStr(elementCat, key) > 0 Then
+                            supportedCat = key
+                            Exit For
+                        End If
+                    Catch ex As Exception
+                        Exit For
+                    End Try
+                Next
+
+                If supportedCat Is Nothing Then
+                    Continue For
+                End If
+
+                ' Find and write properties
+                For Each PropCat In AvailableType(supportedCat)
+                    Try
+                        output.AppendFormat("""{0}"",",' Escape quotes
+                            element.PropertyCategories.FindPropertyByDisplayName(PropCat.Cat, PropCat.Prop).Value)
+                    Catch ex As Exception
+                        output.Append(",")
+                    End Try
+                Next
+                output.Append(Environment.NewLine)
+            Next
+
+            Debug.Print(output.ToString())
+            Return 0
+        End Function
+
+    End Class
+End Namespace
+#End Region
