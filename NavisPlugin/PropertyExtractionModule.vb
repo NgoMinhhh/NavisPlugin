@@ -74,10 +74,10 @@ Module PropertyExtractionModule
             For Each PropCat In AvailableType(supportedCat)
                 Try
                     ' Retrieve the property value based on category and property names
-                    Dim propValue As String = element.PropertyCategories.FindPropertyByDisplayName(PropCat.Cat, PropCat.Prop).Value.ToString()
+                    Dim propValue As VariantData = element.PropertyCategories.FindPropertyByDisplayName(PropCat.Cat, PropCat.Prop).Value
 
                     ' Append the property value to the output StringBuilder in CSV format, escaping quotes
-                    output.AppendFormat("""{0}"",", propValue)
+                    output.AppendFormat("{0},", FormatValueForCSV(propValue))
                 Catch ex As Exception
                     ' If an exception occurs while retrieving a property value, append an empty field
                     output.Append(",")
@@ -104,5 +104,31 @@ Module PropertyExtractionModule
             newCollection.AddRange(modelItem.Descendants)
         Next
         Return newCollection
+    End Function
+
+    '''<summary>
+    ''' Formats a VariantData value for safe CSV output.
+    ''' If the value is a string, it encloses it in double quotes.
+    ''' Otherwise, it returns the value as a string without modification.
+    ''' </summary>
+    ''' <param name="variant">The VariantData value to format.</param>
+    ''' <returns>A string formatted for CSV output.</returns>
+    Public Function FormatValueForCSV(PropertyValue As VariantData) As String
+        Try
+            ' Convert the VariantData to its string representation
+            Dim value As String = PropertyValue.ToString()
+
+            ' Check if the value is a string and contains special CSV characters
+            If PropertyValue.IsDisplayString Then
+                ' Enclose the string in double quotes
+                Return $"""{value}"""
+            Else
+                ' For non-string types, return the string representation as-is
+                Return value
+            End If
+        Catch ex As Exception
+            ' In case of any unexpected errors, return an empty string or handle as needed
+            Return ""
+        End Try
     End Function
 End Module
