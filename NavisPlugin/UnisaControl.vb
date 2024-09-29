@@ -124,6 +124,40 @@ Public Class UnisaControl
     Private Sub txbSetUserFolderPath_Click(sender As Object, e As EventArgs) Handles txbSetUserFolderPath.Click
         UserFolderPathModule.SetUserFolderPath()
     End Sub
+
+    Private Sub btnExtractProperties_Click(sender As Object, e As EventArgs) Handles btnExtractProperties.Click
+
+        Dim selectCollection As ModelItemCollection = PropertyExtractionModule.GetCurrentSelectionAllElements()
+        Dim extractedElements As List(Of Dictionary(Of String, String)) = ExtractProperties(selectCollection)
+        Dim headerList As List(Of String) = GetUniqueHeaderForCsv()
+
+        ' Write header
+        Dim csvContent As New StringBuilder()
+        csvContent.AppendLine(String.Join(",", headerList))
+
+        For Each element In extractedElements
+            Dim rowValues As New List(Of String)()
+
+            For Each header In headerList
+                If element.ContainsKey(header) Then
+                    Dim value As String = element(header)
+                    rowValues.Add(value)
+                Else
+                    ' If the key doesn't exist, leave the field empty
+                    rowValues.Add(String.Empty)
+                End If
+            Next
+            csvContent.AppendLine(String.Join(",", rowValues))
+        Next
+
+        Try
+            Dim filepath As String = Path.Combine(My.Settings.UserFolderPath, "ExtractData", "Sample.csv")
+            File.WriteAllText(filepath, csvContent.ToString(), Encoding.UTF8)
+            Console.WriteLine("CSV file successfully written.")
+        Catch ex As Exception
+            Console.WriteLine($"Error writing CSV file: {ex.Message}")
+        End Try
+    End Sub
 End Class
 
 #Region "LoadCsv"
@@ -324,56 +358,4 @@ Module LoadCsv
     End Function
 
 End Module
-#End Region
-#Region "Extract Properties"
-Module ExtractProperties
-
-    ReadOnly AvailableType As New Dictionary(Of String, List(Of (Cat As String, Prop As String))) From {
-    {"Basic Wall", New List(Of (Cat As String, Prop As String)) From {
-        ("Revit Type", "Width"),
-        ("Revit Type", "AUR_MATERIAL_TYPE"),
-        ("Item", "Material"),
-        ("Element", "Area"),
-        ("Element", "Unconnected Height"),
-        ("Element", "Length"),
-        ("Element", "Id")
-    }},
-    {"Roof", New List(Of (Cat As String, Prop As String)) From {
-        ("Element", "Thickness"),
-        ("Element", "Slope")
-    }}}
-
-
-    Public Function GetAllElements(ExtractPath As String) As ModelItemCollection
-        Dim newCollection As New ModelItemCollection()
-
-        ' Add all child items into a new collection
-        For Each modelItem In Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
-            newCollection.AddRange(modelItem.Descendants)
-        Next
-
-        For Each element In newCollection
-            If Not element.IsComposite Then
-                Continue For
-            End If
-
-            If Not AvailableType.ContainsKey(element.ClassDisplayName) Then
-                Continue For
-            End If
-
-            Dim output As New StringBuilder()
-            For Each propPair In AvailableType(element.ClassDisplayName)
-                output.Append(element.PropertyCategories.FindPropertyByDisplayName(propPair.Cat, propPair.Prop).Value)
-            Next
-
-        Next
-
-
-            Return newCollection
-    End Function
-
-
-End Module
-
-
 #End Region

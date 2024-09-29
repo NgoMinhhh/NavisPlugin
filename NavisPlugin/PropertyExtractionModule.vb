@@ -1,5 +1,6 @@
 ﻿Imports Autodesk.Navisworks.Api
 Imports System.Text
+Imports System.Windows
 
 ''' <summary>
 ''' Provides functionalities to extract properties from selected Navisworks elements based on predefined mappings.
@@ -15,8 +16,6 @@ Module PropertyExtractionModule
     ''' </summary>
     ReadOnly AvailableType As New Dictionary(Of String, List(Of (Cat As String, Prop As String))) From {
         {"Wall", New List(Of (Cat As String, Prop As String)) From {
-            ("Item", "GUID"),
-            ("Document", "Title"),
             ("Revit Type", "Width"),
             ("Revit Type", "AUR_MATERIAL_TYPE"),
             ("Item", "Material"),
@@ -25,71 +24,11 @@ Module PropertyExtractionModule
             ("Element", "Length"),
             ("Element", "Id")
         }},
-        {"Basic Roof", New List(Of (Cat As String, Prop As String)) From {
+        {"Roof", New List(Of (Cat As String, Prop As String)) From {
             ("Element", "Thickness"),
             ("Element", "Slope")
         }}
         }
-
-    ''' <summary>
-    ''' Iterates through each selected element, validates it, and extracts necessary properties based on a predefined dictionary
-    ''' mapping the supported type (Walls, Roofs, etc) with required properties.
-    ''' </summary>
-    ''' <param name="selectedElements">The collection of currently selected ModelItem elements.</param>
-    ''' <returns>A CSV-formatted string containing the extracted properties.</returns>
-    Public Function ExtractProperties(selectedElements As ModelItemCollection) As String
-        Dim output As New StringBuilder()
-
-        For Each element In selectedElements
-            ' Check if the element is a composite (i.e., it has child elements)
-            If Not element.IsComposite Then
-                Continue For
-            End If
-
-            ' Variable to store the supported category if found
-            Dim supportedCat As String = Nothing
-
-            ' Iterate through each key in the AvailableType dictionary to determine if the element's category is supported
-            For Each key In AvailableType.Keys
-                Try
-                    ' Retrieve the 'Category' property from the element's 'Element' property category
-                    Dim elementCat As String = element.PropertyCategories.FindPropertyByDisplayName("Element", "Category").Value.ToString()
-
-                    ' The element's category value need to contain the key, e.g 'Basic Walls' will have the 'Wall' to be valid
-                    If InStr(elementCat, key) > 0 Then
-                        supportedCat = key
-                        Exit For
-                    End If
-                Catch ex As Exception
-                    Exit For
-                End Try
-            Next
-
-            ' If no supported element type was found, skip to the next element
-            If supportedCat Is Nothing Then
-                Continue For
-            End If
-
-            ' Iterate through each property category and property defined for the supported element type
-            For Each PropCat In AvailableType(supportedCat)
-                Try
-                    ' Retrieve the property value based on category and property names
-                    Dim propValue As VariantData = element.PropertyCategories.FindPropertyByDisplayName(PropCat.Cat, PropCat.Prop).Value
-
-                    ' Append the property value to the output StringBuilder in CSV format, escaping quotes
-                    output.AppendFormat("{0},", FormatValueForCSV(propValue))
-                Catch ex As Exception
-                    ' If an exception occurs while retrieving a property value, append an empty field
-                    output.Append(",")
-                End Try
-            Next
-
-            ' Append a newline after processing all properties for the current element
-            output.Append(Environment.NewLine)
-        Next
-
-        Return output.ToString()
-    End Function
 
     '''<summary>
     ''' Retrieves all descendant elements from the currently selected items in the active Navisworks document.
@@ -97,7 +36,7 @@ Module PropertyExtractionModule
     ''' <returns>
     ''' A <see cref="ModelItemCollection"/> containing all child elements of the currently selected items.
     ''' </returns>
-    Private Function GetCurrentSelectionAllElements() As ModelItemCollection
+    Public Function GetCurrentSelectionAllElements() As ModelItemCollection
         ' Initialize a new collection to hold all descendant elements
         Dim newCollection As New ModelItemCollection()
         For Each modelItem In Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
@@ -113,22 +52,92 @@ Module PropertyExtractionModule
     ''' </summary>
     ''' <param name="variant">The VariantData value to format.</param>
     ''' <returns>A string formatted for CSV output.</returns>
-    Public Function FormatValueForCSV(PropertyValue As VariantData) As String
+    Public Function GetPropertyValueForCSV(element As ModelItem, categoryDisplayName As String, propertyDisplayName As String) As String
         Try
             ' Convert the VariantData to its string representation
-            Dim value As String = PropertyValue.ToString()
-
+            Dim propValue As VariantData = element.PropertyCategories.FindPropertyByDisplayName(categoryDisplayName, propertyDisplayName).Value
+            Dim stringValue As String = propValue.ToString().Split(":")(1)
             ' Check if the value is a string and contains special CSV characters
-            If PropertyValue.IsDisplayString Then
+            If propValue.IsDisplayString Then
                 ' Enclose the string in double quotes
-                Return $"""{value}"""
+                Return $"""{stringValue}"""
             Else
                 ' For non-string types, return the string representation as-is
-                Return value
+                Return stringValue
             End If
         Catch ex As Exception
             ' In case of any unexpected errors, return an empty string or handle as needed
             Return ""
         End Try
+    End Function
+
+    Public Function ExtractProperties(selectedElements As ModelItemCollection) As List(Of Dictionary(Of String, String))
+        Dim extractedElements As New List(Of Dictionary(Of String, String))()
+
+        For Each selectedElement In selectedElements
+            If Not selectedElement.IsComposite Then
+                Continue For
+            End If
+
+            Dim supportedCat As String = Nothing
+            ' Iterate through each key in the AvailableType dictionary to determine if the element's category is supported
+            For Each key In AvailableType.Keys
+                Try
+                    ' Retrieve the 'Category' property from the element's 'Element' property category
+                    Dim elementCat As String = GetPropertyValueForCSV(selectedElement, "Element", "Category")
+                    If elementCat = "" Then
+                        Continue For
+                    End If
+
+                    ' The element's category value need to contain the key, e.g 'Basic Walls' will have the 'Wall' to be valid
+                    If InStr(elementCat, key) > 0 Then
+                        supportedCat = key
+                        Exit For
+                    End If
+                Catch ex As Exception
+                    Continue For
+                End Try
+            Next
+
+            ' If no supported element type was found, skip to the next element
+            If supportedCat Is Nothing Then
+                Continue For
+            End If
+
+            ' Extract Basic Properties
+            Dim extractedElement As New Dictionary(Of String, String) From {
+                {"Item.Guid", GetPropertyValueForCSV(selectedElement, "Item", "GUID")},
+                {"Document.Title", GetPropertyValueForCSV(selectedElement, "Document", "Title")},
+                {"Element.Category", GetPropertyValueForCSV(selectedElement, "Element", "Category")}
+            }
+
+            ' Iterate through each property category and property defined for the supported element type
+            For Each propCat In AvailableType(supportedCat)
+                extractedElement.Add($"{propCat.Cat}.{propCat.Prop}", GetPropertyValueForCSV(selectedElement, propCat.Cat, propCat.Prop))
+            Next
+
+            extractedElements.Add(extractedElement)
+        Next
+
+        Return extractedElements
+    End Function
+
+    Public Function GetUniqueHeaderForCsv() As List(Of String)
+
+        ' Add default header
+        Dim uniqueCatPropList As New List(Of String)() From {"Item.Guid", "Document.Title", "Element.Category"}
+
+        ' Add to the unique list of "Cat.Prop" strings using LINQ
+        uniqueCatPropList.AddRange(AvailableType.SelectMany(Function(kvp) kvp.Value) _
+            .Select(Function(tp) _
+                            If(String.IsNullOrWhiteSpace(tp.Cat) OrElse String.IsNullOrWhiteSpace(tp.Prop),
+                            String.Empty,
+                            $"{tp.Cat}.{tp.Prop}")) _
+            .Where(Function(s) Not String.IsNullOrWhiteSpace(s)) _
+            .Distinct(StringComparer.OrdinalIgnoreCase) _
+            .OrderBy(Function(s) s) _
+            .ToList()
+            )
+        Return uniqueCatPropList
     End Function
 End Module
