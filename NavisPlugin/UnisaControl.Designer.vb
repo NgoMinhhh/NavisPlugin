@@ -33,11 +33,11 @@ Partial Class UnisaControl
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.txbSetUserFolderPath = New System.Windows.Forms.Button()
         Me.txbInfo = New System.Windows.Forms.TextBox()
         Me.btnLoadCsv = New System.Windows.Forms.Button()
         Me.btnExtractProperties = New System.Windows.Forms.Button()
         Me.txbCsvPath = New System.Windows.Forms.TextBox()
-        Me.txbSelectOutputPath = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -174,7 +174,7 @@ Partial Class UnisaControl
         '
         'TabPage2
         '
-        Me.TabPage2.Controls.Add(Me.txbSelectOutputPath)
+        Me.TabPage2.Controls.Add(Me.txbSetUserFolderPath)
         Me.TabPage2.Controls.Add(Me.txbInfo)
         Me.TabPage2.Controls.Add(Me.btnLoadCsv)
         Me.TabPage2.Controls.Add(Me.btnExtractProperties)
@@ -186,6 +186,17 @@ Partial Class UnisaControl
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Settings"
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'txbSetUserFolderPath
+        '
+        Me.txbSetUserFolderPath.Dock = System.Windows.Forms.DockStyle.Top
+        Me.txbSetUserFolderPath.Location = New System.Drawing.Point(3, 63)
+        Me.txbSetUserFolderPath.Margin = New System.Windows.Forms.Padding(8)
+        Me.txbSetUserFolderPath.Name = "txbSetUserFolderPath"
+        Me.txbSetUserFolderPath.Size = New System.Drawing.Size(236, 30)
+        Me.txbSetUserFolderPath.TabIndex = 2
+        Me.txbSetUserFolderPath.Text = "Set AppData Folder"
+        Me.txbSetUserFolderPath.UseVisualStyleBackColor = True
         '
         'txbInfo
         '
@@ -236,17 +247,6 @@ Partial Class UnisaControl
         Me.txbCsvPath.TabIndex = 3
         Me.txbCsvPath.TabStop = False
         '
-        'txbSelectOutputPath
-        '
-        Me.txbSelectOutputPath.Dock = System.Windows.Forms.DockStyle.Top
-        Me.txbSelectOutputPath.Location = New System.Drawing.Point(3, 63)
-        Me.txbSelectOutputPath.Margin = New System.Windows.Forms.Padding(8)
-        Me.txbSelectOutputPath.Name = "txbSelectOutputPath"
-        Me.txbSelectOutputPath.Size = New System.Drawing.Size(236, 30)
-        Me.txbSelectOutputPath.TabIndex = 2
-        Me.txbSelectOutputPath.Text = "Select Output Folder"
-        Me.txbSelectOutputPath.UseVisualStyleBackColor = True
-        '
         'UnisaControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -279,5 +279,5 @@ Partial Class UnisaControl
     Friend WithEvents txbInfo As Windows.Forms.TextBox
     Friend WithEvents ComboBox2 As Windows.Forms.ComboBox
     Friend WithEvents ComboBox1 As Windows.Forms.ComboBox
-    Friend WithEvents txbSelectOutputPath As Windows.Forms.Button
+    Friend WithEvents txbSetUserFolderPath As Windows.Forms.Button
 End Class

@@ -18,7 +18,12 @@ Public Class UnisaControl
 
         ' This call is required by the designer.
         InitializeComponent()
-        ' Add any initialization after the InitializeComponent() call.
+
+        ' Ask for User Folder Path to store AppData if there is none
+        If My.Settings.UserFolderPath Is Nothing Then
+            UserFolderPathModule.SetUserFolderPath()
+        End If
+
         ListenSelection(Nothing, Nothing)
         AddHandler Autodesk.Navisworks.Api.Application.MainDocumentChanged, AddressOf ListenSelection
     End Sub
@@ -114,6 +119,10 @@ Public Class UnisaControl
             MessageBox.Show("An error when reading has occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End Try
+    End Sub
+
+    Private Sub txbSetUserFolderPath_Click(sender As Object, e As EventArgs) Handles txbSetUserFolderPath.Click
+        UserFolderPathModule.SetUserFolderPath()
     End Sub
 End Class
 
