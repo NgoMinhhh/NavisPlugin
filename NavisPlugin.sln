@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "NavisPlugin", "NavisPlugin\NavisPlugin.vbproj", "{F54828B2-86B4-4691-854C-1215D879CE61}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "LoDVerifyer", "LoDVerifyer\LoDVerifyer.pyproj", "{7922644F-1F37-4FB8-B1A9-A433E018ED8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{F54828B2-86B4-4691-854C-1215D879CE61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F54828B2-86B4-4691-854C-1215D879CE61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F54828B2-86B4-4691-854C-1215D879CE61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7922644F-1F37-4FB8-B1A9-A433E018ED8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7922644F-1F37-4FB8-B1A9-A433E018ED8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

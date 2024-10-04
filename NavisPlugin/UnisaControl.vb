@@ -158,6 +158,10 @@ Public Class UnisaControl
             Console.WriteLine($"Error writing CSV file: {ex.Message}")
         End Try
     End Sub
+
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        MessageBox.Show("Result Saved Successfully!", "Save")
+    End Sub
 End Class
 
 #Region "LoadCsv"

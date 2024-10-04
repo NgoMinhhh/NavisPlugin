@@ -38,6 +38,7 @@ Partial Class UnisaControl
         Me.btnLoadCsv = New System.Windows.Forms.Button()
         Me.btnExtractProperties = New System.Windows.Forms.Button()
         Me.txbCsvPath = New System.Windows.Forms.TextBox()
+        Me.BtnSave = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -56,6 +57,7 @@ Partial Class UnisaControl
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.BtnSave)
         Me.TabPage1.Controls.Add(Me.ComboBox2)
         Me.TabPage1.Controls.Add(Me.ComboBox1)
         Me.TabPage1.Controls.Add(Me.Label4)
@@ -87,6 +89,7 @@ Partial Class UnisaControl
         Me.ComboBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {"300", "200"})
         Me.ComboBox1.Location = New System.Drawing.Point(58, 74)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(178, 24)
@@ -137,7 +140,7 @@ Partial Class UnisaControl
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(10, 113)
+        Me.Label2.Location = New System.Drawing.Point(10, 107)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(128, 17)
         Me.Label2.TabIndex = 4
@@ -247,6 +250,15 @@ Partial Class UnisaControl
         Me.txbCsvPath.TabIndex = 3
         Me.txbCsvPath.TabStop = False
         '
+        'BtnSave
+        '
+        Me.BtnSave.Location = New System.Drawing.Point(161, 104)
+        Me.BtnSave.Name = "BtnSave"
+        Me.BtnSave.Size = New System.Drawing.Size(75, 23)
+        Me.BtnSave.TabIndex = 11
+        Me.BtnSave.Text = "Save"
+        Me.BtnSave.UseVisualStyleBackColor = True
+        '
         'UnisaControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -280,4 +292,5 @@ Partial Class UnisaControl
     Friend WithEvents ComboBox2 As Windows.Forms.ComboBox
     Friend WithEvents ComboBox1 As Windows.Forms.ComboBox
     Friend WithEvents txbSetUserFolderPath As Windows.Forms.Button
+    Friend WithEvents BtnSave As Windows.Forms.Button
 End Class
