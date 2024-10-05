@@ -24,8 +24,9 @@ Public Class UnisaControl
             UserFolderPathModule.SetUserFolderPath()
         End If
 
-        ListenSelection(Nothing, Nothing)
-        AddHandler Autodesk.Navisworks.Api.Application.MainDocumentChanged, AddressOf ListenSelection
+        ' Event listener to detect change in current selection and update info panel accordingly
+        AddHandler Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.Changed, AddressOf GetCurrentElementLoDInfo
+
     End Sub
 
     Protected Overrides Sub OnParentChanged(e As EventArgs)
@@ -33,31 +34,26 @@ Public Class UnisaControl
         Dock = DockStyle.Fill
     End Sub
 
-    Private Sub ListenSelection(sender As Object, e As EventArgs)
-        Try
-            AddHandler Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.Changed, AddressOf GetCurrentElementLoDInfo
-        Catch ex As Exception
-            ' Exception handling can be added here
-        End Try
-    End Sub
-
-    Public Sub GetCurrentElementLoDInfo()
+    Private Sub GetCurrentElementLoDInfo()
         Dim currentElement As ModelItem = Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems.First
         If currentElement Is Nothing Or CurrIngestedElements Is Nothing Then
             Exit Sub
         End If
 
-        txbInfo.Clear()
-        Dim textboxContent As String = ""
+        ' Reset the display
+        txbGuid.Clear()
+        cmbStatus.Text = String.Empty
+        cmbLoD.Text = String.Empty
+        txbMissingProperties.Clear()
         Try
             Dim currentGuid As String = currentElement.PropertyCategories.FindPropertyByName(PropertyCategoryNames.Item, DataPropertyNames.ItemGuid).Value.ToDisplayString()
             Dim isVerified As Boolean = False
             For Each ingestedElement As IngestedElement In CurrIngestedElements
                 If currentGuid = ingestedElement.GUID Then
-                    textboxContent = $" - GUID   > {ingestedElement.GUID}" & vbCrLf &
-                                 $" - Result > Verified" & vbCrLf &
-                                 $" - LoD    > {ingestedElement.LOD}" & vbCrLf &
-                                 $" - Missing Properties > {ingestedElement.MissingProperties}"
+                    txbGuid.Text = ingestedElement.GUID
+                    cmbStatus.SelectedText = "Verified"
+                    cmbLoD.SelectedText = ingestedElement.LOD
+                    txbMissingProperties.Text = ingestedElement.MissingProperties
                     isVerified = True
                     Exit For
                 End If
@@ -65,18 +61,14 @@ Public Class UnisaControl
             Next
 
             If Not isVerified Then
-                textboxContent = $" - GUID   > {currentGuid}" & vbCrLf &
-                             $" - Result > Not Verified" & vbCrLf
+                cmbStatus.SelectedText = "Not Verified"
             End If
         Catch ex As Exception
-            textboxContent = $" - GUID   > Can not find GUID" & vbCrLf &
-                         $" - Result > Error" & vbCrLf
+            cmbStatus.SelectedText = "Error"
         End Try
-
-        txbInfo.Text = textboxContent
     End Sub
 
-    Private Sub btnLoadCsv_MouseUp(sender As Object, e As MouseEventArgs)
+    Private Sub btnLoadCsv_Click(sender As Object, e As EventArgs) Handles btnLoadCsv.Click
         Dim CsvFilePath As String = GetCsvFilePath()
         If CsvFilePath Is String.Empty Then
             MessageBox.Show("No CSV file is chosen!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -121,7 +113,7 @@ Public Class UnisaControl
         End Try
     End Sub
 
-    Private Sub txbSetUserFolderPath_Click(sender As Object, e As EventArgs) Handles txbSetUserFolderPath.Click
+    Private Sub btnSetUserFolderPath_Click(sender As Object, e As EventArgs) Handles btnSetUserFolderPath.Click
         Dim result As DialogResult = MessageBox.Show($"The Current AppData folder is" & vbNewLine &
                                                      My.Settings.UserFolderPath & vbNewLine &
                                                     "Do you want to change the settings?",
@@ -168,13 +160,11 @@ Public Class UnisaControl
         End Try
     End Sub
 
-    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         MessageBox.Show("Result Saved Successfully!", "Save")
     End Sub
 
-    Private Sub btnLoadCsv_Click(sender As Object, e As EventArgs) Handles btnLoadCsv.Click
 
-    End Sub
 End Class
 
 #Region "LoadCsv"
