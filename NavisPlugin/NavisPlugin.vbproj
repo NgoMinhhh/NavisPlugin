@@ -110,6 +110,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UnisaControl.resx">
       <DependentUpon>UnisaControl.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

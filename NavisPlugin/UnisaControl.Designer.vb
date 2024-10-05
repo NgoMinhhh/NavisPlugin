@@ -22,196 +22,208 @@ Partial Class UnisaControl
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.BtnSave = New System.Windows.Forms.Button()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.txbSetUserFolderPath = New System.Windows.Forms.Button()
+        Me.tabPlugin = New System.Windows.Forms.TabControl()
+        Me.tpInfo = New System.Windows.Forms.TabPage()
+        Me.btnSave = New System.Windows.Forms.Button()
+        Me.cmbStatus = New System.Windows.Forms.ComboBox()
+        Me.cmbLoD = New System.Windows.Forms.ComboBox()
+        Me.lblStatus = New System.Windows.Forms.Label()
+        Me.lblLoD = New System.Windows.Forms.Label()
+        Me.txbMissingProperties = New System.Windows.Forms.TextBox()
+        Me.lblMissingProperpties = New System.Windows.Forms.Label()
+        Me.txbGuid = New System.Windows.Forms.TextBox()
+        Me.lblGuid = New System.Windows.Forms.Label()
+        Me.tpSettings = New System.Windows.Forms.TabPage()
+        Me.lblCurrentLoadout = New System.Windows.Forms.Label()
+        Me.btnSetUserFolderPath = New System.Windows.Forms.Button()
         Me.txbInfo = New System.Windows.Forms.TextBox()
         Me.btnLoadCsv = New System.Windows.Forms.Button()
         Me.btnExtractProperties = New System.Windows.Forms.Button()
         Me.txbCsvPath = New System.Windows.Forms.TextBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.TabControl1.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
+        Me.tabPlugin.SuspendLayout()
+        Me.tpInfo.SuspendLayout()
+        Me.tpSettings.SuspendLayout()
         Me.SuspendLayout()
         '
-        'TabControl1
+        'tabPlugin
         '
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl1.Location = New System.Drawing.Point(0, 0)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(250, 230)
-        Me.TabControl1.TabIndex = 9
+        Me.tabPlugin.Controls.Add(Me.tpInfo)
+        Me.tabPlugin.Controls.Add(Me.tpSettings)
+        Me.tabPlugin.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tabPlugin.Location = New System.Drawing.Point(0, 0)
+        Me.tabPlugin.Name = "tabPlugin"
+        Me.tabPlugin.SelectedIndex = 0
+        Me.tabPlugin.Size = New System.Drawing.Size(250, 230)
+        Me.tabPlugin.TabIndex = 9
         '
-        'TabPage1
+        'tpInfo
         '
-        Me.TabPage1.Controls.Add(Me.BtnSave)
-        Me.TabPage1.Controls.Add(Me.ComboBox2)
-        Me.TabPage1.Controls.Add(Me.ComboBox1)
-        Me.TabPage1.Controls.Add(Me.Label4)
-        Me.TabPage1.Controls.Add(Me.Label3)
-        Me.TabPage1.Controls.Add(Me.TextBox1)
-        Me.TabPage1.Controls.Add(Me.Label2)
-        Me.TabPage1.Controls.Add(Me.TextBox2)
-        Me.TabPage1.Controls.Add(Me.Label1)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(242, 201)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Info"
-        Me.TabPage1.UseVisualStyleBackColor = True
+        Me.tpInfo.Controls.Add(Me.btnSave)
+        Me.tpInfo.Controls.Add(Me.cmbStatus)
+        Me.tpInfo.Controls.Add(Me.cmbLoD)
+        Me.tpInfo.Controls.Add(Me.lblStatus)
+        Me.tpInfo.Controls.Add(Me.lblLoD)
+        Me.tpInfo.Controls.Add(Me.txbMissingProperties)
+        Me.tpInfo.Controls.Add(Me.lblMissingProperpties)
+        Me.tpInfo.Controls.Add(Me.txbGuid)
+        Me.tpInfo.Controls.Add(Me.lblGuid)
+        Me.tpInfo.Location = New System.Drawing.Point(4, 25)
+        Me.tpInfo.Name = "tpInfo"
+        Me.tpInfo.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpInfo.Size = New System.Drawing.Size(242, 201)
+        Me.tpInfo.TabIndex = 0
+        Me.tpInfo.Text = "Info"
+        Me.tpInfo.UseVisualStyleBackColor = True
         '
-        'BtnSave
+        'btnSave
         '
-        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnSave.Location = New System.Drawing.Point(161, 95)
-        Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(75, 23)
-        Me.BtnSave.TabIndex = 11
-        Me.BtnSave.Text = "Save"
-        Me.BtnSave.UseVisualStyleBackColor = True
+        Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSave.Location = New System.Drawing.Point(161, 95)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(75, 23)
+        Me.btnSave.TabIndex = 11
+        Me.btnSave.Text = "Save"
+        Me.btnSave.UseVisualStyleBackColor = True
         '
-        'ComboBox2
+        'cmbStatus
         '
-        Me.ComboBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.cmbStatus.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Items.AddRange(New Object() {"Not Verified", "Verified"})
-        Me.ComboBox2.Location = New System.Drawing.Point(58, 35)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(178, 24)
-        Me.ComboBox2.TabIndex = 10
+        Me.cmbStatus.FormattingEnabled = True
+        Me.cmbStatus.Items.AddRange(New Object() {"Not Verified", "Verified"})
+        Me.cmbStatus.Location = New System.Drawing.Point(58, 35)
+        Me.cmbStatus.Name = "cmbStatus"
+        Me.cmbStatus.Size = New System.Drawing.Size(178, 24)
+        Me.cmbStatus.TabIndex = 10
         '
-        'ComboBox1
+        'cmbLoD
         '
-        Me.ComboBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.cmbLoD.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"300", "200"})
-        Me.ComboBox1.Location = New System.Drawing.Point(58, 65)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(178, 24)
-        Me.ComboBox1.TabIndex = 9
+        Me.cmbLoD.FormattingEnabled = True
+        Me.cmbLoD.Items.AddRange(New Object() {"300", "200"})
+        Me.cmbLoD.Location = New System.Drawing.Point(58, 65)
+        Me.cmbLoD.Name = "cmbLoD"
+        Me.cmbLoD.Size = New System.Drawing.Size(178, 24)
+        Me.cmbLoD.TabIndex = 9
         '
-        'Label4
+        'lblStatus
         '
-        Me.Label4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.lblStatus.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(10, 38)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(48, 17)
-        Me.Label4.TabIndex = 8
-        Me.Label4.Text = "Status"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStatus.AutoSize = True
+        Me.lblStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblStatus.Location = New System.Drawing.Point(10, 38)
+        Me.lblStatus.Name = "lblStatus"
+        Me.lblStatus.Size = New System.Drawing.Size(48, 17)
+        Me.lblStatus.TabIndex = 8
+        Me.lblStatus.Text = "Status"
+        Me.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label3
+        'lblLoD
         '
-        Me.Label3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.lblLoD.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(10, 68)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(34, 17)
-        Me.Label3.TabIndex = 6
-        Me.Label3.Text = "LoD"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblLoD.AutoSize = True
+        Me.lblLoD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLoD.Location = New System.Drawing.Point(10, 68)
+        Me.lblLoD.Name = "lblLoD"
+        Me.lblLoD.Size = New System.Drawing.Size(34, 17)
+        Me.lblLoD.TabIndex = 6
+        Me.lblLoD.Text = "LoD"
+        Me.lblLoD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'TextBox1
+        'txbMissingProperties
         '
-        Me.TextBox1.AllowDrop = True
-        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(3, 129)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(236, 69)
-        Me.TextBox1.TabIndex = 3
-        Me.TextBox1.Text = "AUR Material Type, Material"
-        Me.TextBox1.WordWrap = False
+        Me.txbMissingProperties.AllowDrop = True
+        Me.txbMissingProperties.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txbMissingProperties.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.txbMissingProperties.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txbMissingProperties.Location = New System.Drawing.Point(3, 129)
+        Me.txbMissingProperties.Multiline = True
+        Me.txbMissingProperties.Name = "txbMissingProperties"
+        Me.txbMissingProperties.ReadOnly = True
+        Me.txbMissingProperties.Size = New System.Drawing.Size(236, 69)
+        Me.txbMissingProperties.TabIndex = 3
+        Me.txbMissingProperties.Text = "AUR Material Type, Material"
+        Me.txbMissingProperties.WordWrap = False
         '
-        'Label2
+        'lblMissingProperpties
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(10, 98)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(124, 17)
-        Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Missing Properties"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblMissingProperpties.AutoSize = True
+        Me.lblMissingProperpties.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblMissingProperpties.Location = New System.Drawing.Point(10, 98)
+        Me.lblMissingProperpties.Name = "lblMissingProperpties"
+        Me.lblMissingProperpties.Size = New System.Drawing.Size(124, 17)
+        Me.lblMissingProperpties.TabIndex = 4
+        Me.lblMissingProperpties.Text = "Missing Properties"
+        Me.lblMissingProperpties.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'TextBox2
+        'txbGuid
         '
-        Me.TextBox2.AllowDrop = True
-        Me.TextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.txbGuid.AllowDrop = True
+        Me.txbGuid.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(61, 6)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.ReadOnly = True
-        Me.TextBox2.Size = New System.Drawing.Size(178, 23)
-        Me.TextBox2.TabIndex = 0
-        Me.TextBox2.Text = "83821176-0f08-4614-9cde-a6f875156919"
+        Me.txbGuid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txbGuid.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txbGuid.Location = New System.Drawing.Point(61, 6)
+        Me.txbGuid.Name = "txbGuid"
+        Me.txbGuid.ReadOnly = True
+        Me.txbGuid.Size = New System.Drawing.Size(178, 23)
+        Me.txbGuid.TabIndex = 0
+        Me.txbGuid.Text = "83821176-0f08-4614-9cde-a6f875156919"
         '
-        'Label1
+        'lblGuid
         '
-        Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.lblGuid.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(13, 8)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(42, 17)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "GUID"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblGuid.AutoSize = True
+        Me.lblGuid.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblGuid.Location = New System.Drawing.Point(13, 8)
+        Me.lblGuid.Name = "lblGuid"
+        Me.lblGuid.Size = New System.Drawing.Size(42, 17)
+        Me.lblGuid.TabIndex = 2
+        Me.lblGuid.Text = "GUID"
+        Me.lblGuid.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'TabPage2
+        'tpSettings
         '
-        Me.TabPage2.Controls.Add(Me.Label5)
-        Me.TabPage2.Controls.Add(Me.txbSetUserFolderPath)
-        Me.TabPage2.Controls.Add(Me.txbInfo)
-        Me.TabPage2.Controls.Add(Me.btnLoadCsv)
-        Me.TabPage2.Controls.Add(Me.btnExtractProperties)
-        Me.TabPage2.Controls.Add(Me.txbCsvPath)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 25)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(242, 201)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Settings"
-        Me.TabPage2.UseVisualStyleBackColor = True
+        Me.tpSettings.Controls.Add(Me.lblCurrentLoadout)
+        Me.tpSettings.Controls.Add(Me.btnSetUserFolderPath)
+        Me.tpSettings.Controls.Add(Me.txbInfo)
+        Me.tpSettings.Controls.Add(Me.btnLoadCsv)
+        Me.tpSettings.Controls.Add(Me.btnExtractProperties)
+        Me.tpSettings.Controls.Add(Me.txbCsvPath)
+        Me.tpSettings.Location = New System.Drawing.Point(4, 25)
+        Me.tpSettings.Name = "tpSettings"
+        Me.tpSettings.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpSettings.Size = New System.Drawing.Size(242, 201)
+        Me.tpSettings.TabIndex = 1
+        Me.tpSettings.Text = "Settings"
+        Me.tpSettings.UseVisualStyleBackColor = True
         '
-        'txbSetUserFolderPath
+        'lblCurrentLoadout
         '
-        Me.txbSetUserFolderPath.Dock = System.Windows.Forms.DockStyle.Top
-        Me.txbSetUserFolderPath.Location = New System.Drawing.Point(3, 63)
-        Me.txbSetUserFolderPath.Margin = New System.Windows.Forms.Padding(8)
-        Me.txbSetUserFolderPath.Name = "txbSetUserFolderPath"
-        Me.txbSetUserFolderPath.Size = New System.Drawing.Size(236, 30)
-        Me.txbSetUserFolderPath.TabIndex = 2
-        Me.txbSetUserFolderPath.Text = "Set AppData Folder"
-        Me.txbSetUserFolderPath.UseVisualStyleBackColor = True
+        Me.lblCurrentLoadout.AutoSize = True
+        Me.lblCurrentLoadout.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.lblCurrentLoadout.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCurrentLoadout.Location = New System.Drawing.Point(3, 104)
+        Me.lblCurrentLoadout.Name = "lblCurrentLoadout"
+        Me.lblCurrentLoadout.Size = New System.Drawing.Size(111, 17)
+        Me.lblCurrentLoadout.TabIndex = 10
+        Me.lblCurrentLoadout.Text = "Current Loadout"
+        Me.lblCurrentLoadout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'btnSetUserFolderPath
+        '
+        Me.btnSetUserFolderPath.Dock = System.Windows.Forms.DockStyle.Top
+        Me.btnSetUserFolderPath.Location = New System.Drawing.Point(3, 63)
+        Me.btnSetUserFolderPath.Margin = New System.Windows.Forms.Padding(8)
+        Me.btnSetUserFolderPath.Name = "btnSetUserFolderPath"
+        Me.btnSetUserFolderPath.Size = New System.Drawing.Size(236, 30)
+        Me.btnSetUserFolderPath.TabIndex = 2
+        Me.btnSetUserFolderPath.Text = "Set AppData Folder"
+        Me.btnSetUserFolderPath.UseVisualStyleBackColor = True
         '
         'txbInfo
         '
@@ -253,6 +265,7 @@ Partial Class UnisaControl
         '
         Me.txbCsvPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txbCsvPath.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.txbCsvPath.Enabled = False
         Me.txbCsvPath.ImeMode = System.Windows.Forms.ImeMode.Off
         Me.txbCsvPath.Location = New System.Drawing.Point(3, 121)
         Me.txbCsvPath.Multiline = True
@@ -261,50 +274,39 @@ Partial Class UnisaControl
         Me.txbCsvPath.TabIndex = 3
         Me.txbCsvPath.TabStop = False
         '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(6, 101)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(111, 17)
-        Me.Label5.TabIndex = 10
-        Me.Label5.Text = "Current Loadout"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'UnisaControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.Controls.Add(Me.TabControl1)
+        Me.Controls.Add(Me.tabPlugin)
         Me.MinimumSize = New System.Drawing.Size(250, 230)
         Me.Name = "UnisaControl"
         Me.Size = New System.Drawing.Size(250, 230)
-        Me.TabControl1.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
+        Me.tabPlugin.ResumeLayout(False)
+        Me.tpInfo.ResumeLayout(False)
+        Me.tpInfo.PerformLayout()
+        Me.tpSettings.ResumeLayout(False)
+        Me.tpSettings.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents TabControl1 As Windows.Forms.TabControl
-    Friend WithEvents TabPage1 As Windows.Forms.TabPage
-    Friend WithEvents TabPage2 As Windows.Forms.TabPage
-    Friend WithEvents Label1 As Windows.Forms.Label
-    Friend WithEvents Label4 As Windows.Forms.Label
-    Friend WithEvents TextBox1 As Windows.Forms.TextBox
-    Friend WithEvents Label2 As Windows.Forms.Label
-    Friend WithEvents TextBox2 As Windows.Forms.TextBox
-    Private WithEvents Label3 As Windows.Forms.Label
+    Friend WithEvents tabPlugin As Windows.Forms.TabControl
+    Friend WithEvents tpInfo As Windows.Forms.TabPage
+    Friend WithEvents tpSettings As Windows.Forms.TabPage
+    Friend WithEvents lblGuid As Windows.Forms.Label
+    Friend WithEvents lblStatus As Windows.Forms.Label
+    Friend WithEvents txbMissingProperties As Windows.Forms.TextBox
+    Friend WithEvents lblMissingProperpties As Windows.Forms.Label
+    Friend WithEvents txbGuid As Windows.Forms.TextBox
+    Friend WithEvents lblLoD As Windows.Forms.Label
     Friend WithEvents btnLoadCsv As Windows.Forms.Button
     Friend WithEvents btnExtractProperties As Windows.Forms.Button
     Friend WithEvents txbCsvPath As Windows.Forms.TextBox
     Friend WithEvents txbInfo As Windows.Forms.TextBox
-    Friend WithEvents ComboBox2 As Windows.Forms.ComboBox
-    Friend WithEvents ComboBox1 As Windows.Forms.ComboBox
-    Friend WithEvents txbSetUserFolderPath As Windows.Forms.Button
-    Friend WithEvents BtnSave As Windows.Forms.Button
-    Friend WithEvents Label5 As Windows.Forms.Label
+    Friend WithEvents cmbStatus As Windows.Forms.ComboBox
+    Friend WithEvents cmbLoD As Windows.Forms.ComboBox
+    Friend WithEvents btnSetUserFolderPath As Windows.Forms.Button
+    Friend WithEvents btnSave As Windows.Forms.Button
+    Friend WithEvents lblCurrentLoadout As Windows.Forms.Label
 End Class
