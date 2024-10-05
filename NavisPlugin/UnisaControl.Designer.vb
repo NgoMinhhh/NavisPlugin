@@ -24,6 +24,7 @@ Partial Class UnisaControl
     Private Sub InitializeComponent()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.BtnSave = New System.Windows.Forms.Button()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -38,7 +39,7 @@ Partial Class UnisaControl
         Me.btnLoadCsv = New System.Windows.Forms.Button()
         Me.btnExtractProperties = New System.Windows.Forms.Button()
         Me.txbCsvPath = New System.Windows.Forms.TextBox()
-        Me.BtnSave = New System.Windows.Forms.Button()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -52,7 +53,7 @@ Partial Class UnisaControl
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(250, 250)
+        Me.TabControl1.Size = New System.Drawing.Size(250, 230)
         Me.TabControl1.TabIndex = 9
         '
         'TabPage1
@@ -69,17 +70,28 @@ Partial Class UnisaControl
         Me.TabPage1.Location = New System.Drawing.Point(4, 25)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(242, 221)
+        Me.TabPage1.Size = New System.Drawing.Size(242, 201)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Info"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'BtnSave
+        '
+        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSave.Location = New System.Drawing.Point(161, 95)
+        Me.BtnSave.Name = "BtnSave"
+        Me.BtnSave.Size = New System.Drawing.Size(75, 23)
+        Me.BtnSave.TabIndex = 11
+        Me.BtnSave.Text = "Save"
+        Me.BtnSave.UseVisualStyleBackColor = True
         '
         'ComboBox2
         '
         Me.ComboBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(58, 44)
+        Me.ComboBox2.Items.AddRange(New Object() {"Not Verified", "Verified"})
+        Me.ComboBox2.Location = New System.Drawing.Point(58, 35)
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(178, 24)
         Me.ComboBox2.TabIndex = 10
@@ -90,7 +102,7 @@ Partial Class UnisaControl
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"300", "200"})
-        Me.ComboBox1.Location = New System.Drawing.Point(58, 74)
+        Me.ComboBox1.Location = New System.Drawing.Point(58, 65)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(178, 24)
         Me.ComboBox1.TabIndex = 9
@@ -101,7 +113,7 @@ Partial Class UnisaControl
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(10, 47)
+        Me.Label4.Location = New System.Drawing.Point(10, 38)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(48, 17)
         Me.Label4.TabIndex = 8
@@ -114,7 +126,7 @@ Partial Class UnisaControl
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(10, 77)
+        Me.Label3.Location = New System.Drawing.Point(10, 68)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(34, 17)
         Me.Label3.TabIndex = 6
@@ -127,24 +139,24 @@ Partial Class UnisaControl
         Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(3, 133)
+        Me.TextBox1.Location = New System.Drawing.Point(3, 129)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(236, 85)
+        Me.TextBox1.Size = New System.Drawing.Size(236, 69)
         Me.TextBox1.TabIndex = 3
-        Me.TextBox1.Text = "123-456-789"
+        Me.TextBox1.Text = "AUR Material Type, Material"
         Me.TextBox1.WordWrap = False
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(10, 107)
+        Me.Label2.Location = New System.Drawing.Point(10, 98)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(128, 17)
+        Me.Label2.Size = New System.Drawing.Size(124, 17)
         Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Missing Properties:"
+        Me.Label2.Text = "Missing Properties"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TextBox2
@@ -154,13 +166,12 @@ Partial Class UnisaControl
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(58, 15)
+        Me.TextBox2.Location = New System.Drawing.Point(61, 6)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.ReadOnly = True
         Me.TextBox2.Size = New System.Drawing.Size(178, 23)
         Me.TextBox2.TabIndex = 0
-        Me.TextBox2.Text = "123-456-789"
-        Me.TextBox2.WordWrap = False
+        Me.TextBox2.Text = "83821176-0f08-4614-9cde-a6f875156919"
         '
         'Label1
         '
@@ -168,7 +179,7 @@ Partial Class UnisaControl
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(10, 17)
+        Me.Label1.Location = New System.Drawing.Point(13, 8)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(42, 17)
         Me.Label1.TabIndex = 2
@@ -177,6 +188,7 @@ Partial Class UnisaControl
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Label5)
         Me.TabPage2.Controls.Add(Me.txbSetUserFolderPath)
         Me.TabPage2.Controls.Add(Me.txbInfo)
         Me.TabPage2.Controls.Add(Me.btnLoadCsv)
@@ -185,7 +197,7 @@ Partial Class UnisaControl
         Me.TabPage2.Location = New System.Drawing.Point(4, 25)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(242, 221)
+        Me.TabPage2.Size = New System.Drawing.Size(242, 201)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Settings"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -242,22 +254,23 @@ Partial Class UnisaControl
         Me.txbCsvPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txbCsvPath.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.txbCsvPath.ImeMode = System.Windows.Forms.ImeMode.Off
-        Me.txbCsvPath.Location = New System.Drawing.Point(3, 98)
+        Me.txbCsvPath.Location = New System.Drawing.Point(3, 121)
         Me.txbCsvPath.Multiline = True
         Me.txbCsvPath.Name = "txbCsvPath"
-        Me.txbCsvPath.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txbCsvPath.Size = New System.Drawing.Size(236, 120)
+        Me.txbCsvPath.Size = New System.Drawing.Size(236, 77)
         Me.txbCsvPath.TabIndex = 3
         Me.txbCsvPath.TabStop = False
         '
-        'BtnSave
+        'Label5
         '
-        Me.BtnSave.Location = New System.Drawing.Point(161, 104)
-        Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(75, 23)
-        Me.BtnSave.TabIndex = 11
-        Me.BtnSave.Text = "Save"
-        Me.BtnSave.UseVisualStyleBackColor = True
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(6, 101)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(111, 17)
+        Me.Label5.TabIndex = 10
+        Me.Label5.Text = "Current Loadout"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'UnisaControl
         '
@@ -265,9 +278,9 @@ Partial Class UnisaControl
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.Controls.Add(Me.TabControl1)
-        Me.MinimumSize = New System.Drawing.Size(240, 250)
+        Me.MinimumSize = New System.Drawing.Size(250, 230)
         Me.Name = "UnisaControl"
-        Me.Size = New System.Drawing.Size(250, 250)
+        Me.Size = New System.Drawing.Size(250, 230)
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -293,4 +306,5 @@ Partial Class UnisaControl
     Friend WithEvents ComboBox1 As Windows.Forms.ComboBox
     Friend WithEvents txbSetUserFolderPath As Windows.Forms.Button
     Friend WithEvents BtnSave As Windows.Forms.Button
+    Friend WithEvents Label5 As Windows.Forms.Label
 End Class

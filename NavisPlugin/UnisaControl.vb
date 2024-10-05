@@ -122,7 +122,16 @@ Public Class UnisaControl
     End Sub
 
     Private Sub txbSetUserFolderPath_Click(sender As Object, e As EventArgs) Handles txbSetUserFolderPath.Click
-        UserFolderPathModule.SetUserFolderPath()
+        Dim result As DialogResult = MessageBox.Show($"The Current AppData folder is" & vbNewLine &
+                                                     My.Settings.UserFolderPath & vbNewLine &
+                                                    "Do you want to change the settings?",
+                                                     "Confirmation",
+                                                     MessageBoxButtons.YesNo,
+                                                     MessageBoxIcon.Question)
+        If result = DialogResult.Yes Then
+            ' User chose "Yes" which we'll interpret as "Change"
+            UserFolderPathModule.SetUserFolderPath()
+        End If
     End Sub
 
     Private Sub btnExtractProperties_Click(sender As Object, e As EventArgs) Handles btnExtractProperties.Click
@@ -161,6 +170,10 @@ Public Class UnisaControl
 
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         MessageBox.Show("Result Saved Successfully!", "Save")
+    End Sub
+
+    Private Sub btnLoadCsv_Click(sender As Object, e As EventArgs) Handles btnLoadCsv.Click
+
     End Sub
 End Class
 
