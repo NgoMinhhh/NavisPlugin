@@ -1,5 +1,4 @@
-﻿Imports System.Data.Common
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
 Imports System.Windows.Forms
 Imports Autodesk.Navisworks.Api
@@ -136,6 +135,13 @@ Public Class UnisaControl
 
     Private Sub btnExtractProperties_Click(sender As Object, e As EventArgs) Handles btnExtractProperties.Click
 
+        Dim outputName As String = InputBox("Please input name for this selection", "Algorithm Output Name")
+        ' Check if the user pressed Cancel or entered an empty string
+        If String.IsNullOrWhiteSpace(outputName) Then
+            MessageBox.Show("Operation canceled or no file name provided.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
         Dim selectCollection As ModelItemCollection = PropertyExtractionModule.GetCurrentSelectionAllElements()
         Dim extractedElements As List(Of Dictionary(Of String, String)) = ExtractProperties(selectCollection)
         Dim headerList As List(Of String) = GetUniqueHeaderForCsv()
@@ -160,11 +166,11 @@ Public Class UnisaControl
         Next
 
         Try
-            Dim filepath As String = Path.Combine(My.Settings.UserFolderPath, "ExtractData", "Sample.csv")
+            Dim filepath As String = Path.Combine(My.Settings.UserFolderPath, "ExtractData", $"{outputName}.csv")
             File.WriteAllText(filepath, csvContent.ToString(), Encoding.UTF8)
             Console.WriteLine("CSV file successfully written.")
         Catch ex As Exception
-            Console.WriteLine($"Error writing CSV file: {ex.Message}")
+            MessageBox.Show($"Error saving CSV file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
