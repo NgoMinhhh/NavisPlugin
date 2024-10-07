@@ -58,7 +58,7 @@ Module PropertyExtractionModule
         ' Initialize a new collection to hold all descendant elements
         Dim newCollection As New ModelItemCollection()
         For Each modelItem In Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
-            newCollection.AddRange(modelItem.Descendants)
+            newCollection.AddRange(modelItem.DescendantsAndSelf)
         Next
         Return newCollection
     End Function
@@ -75,14 +75,14 @@ Module PropertyExtractionModule
             ' Convert the VariantData to its string representation
             Dim propValue As VariantData = element.PropertyCategories.FindPropertyByDisplayName(categoryDisplayName, propertyDisplayName).Value
             Dim stringValue As String = propValue.ToString().Split(":")(1)
-            ' Check if the value is a string and contains special CSV characters
-            If propValue.IsDisplayString Then
-                ' Enclose the string in double quotes
-                Return $"""{stringValue}"""
-            Else
-                ' For non-string types, return the string representation as-is
-                Return stringValue
+            ' Escape double quotes by replacing each " with ""
+            stringValue = stringValue.Replace("""", """""")
+            ' Check if the string contains any characters that need escaping in CSV
+            If stringValue.Contains(",") OrElse stringValue.Contains("""") OrElse stringValue.Contains(vbCr) OrElse stringValue.Contains(vbLf) Then
+                ' Enclose the entire string in double quotes
+                stringValue = $"""{stringValue}"""
             End If
+            Return stringValue
         Catch ex As Exception
             ' In case of any unexpected errors, return an empty string or handle as needed
             Return ""
@@ -144,7 +144,7 @@ Module PropertyExtractionModule
     Public Function GetUniqueHeaderForCsv() As List(Of String)
 
         ' Add default header
-        Dim uniqueCatPropList As New List(Of String)() From {"Item.Guid", "Document.Title", "Element.Category"}
+        Dim uniqueCatPropList As New List(Of String)() From {"Item.Guid", "Document.Title", "Element.Category", "Element.Name"}
 
         ' Add to the unique list of "Cat.Prop" strings using LINQ
         uniqueCatPropList.AddRange(AvailableType.SelectMany(Function(kvp) kvp.Value) _
@@ -186,13 +186,13 @@ Module PropertyExtractionModule
                     For Each header In headerList
                         If element.ContainsKey(header) Then
                             Dim value As String = element(header)
-                            rowValues.Add(value)
+                            writer.Write($"{value},")
                         Else
                             ' If the key doesn't exist, leave the field empty
-                            rowValues.Add(String.Empty)
+                            writer.Write(String.Empty & ",")
                         End If
                     Next
-                    writer.WriteLine(String.Join(",", rowValues))
+                    writer.Write(vbNewLine)
                 Next
                 writer.Close()
             End Using
