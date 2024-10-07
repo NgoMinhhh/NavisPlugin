@@ -1,6 +1,6 @@
-﻿Imports Autodesk.Navisworks.Api
+﻿Imports System.IO
 Imports System.Text
-Imports System.Windows
+Imports Autodesk.Navisworks.Api
 
 ''' <summary>
 ''' Provides functionalities to extract properties from selected Navisworks elements based on predefined mappings.
@@ -27,8 +27,26 @@ Module PropertyExtractionModule
         {"Roof", New List(Of (Cat As String, Prop As String)) From {
             ("Element", "Thickness"),
             ("Element", "Slope")
-        }}
-        }
+        }},
+        {"Ceiling", New List(Of (Cat As String, Prop As String)) From {
+            ("Element", "Area"),
+            ("Element", "Length"),
+            ("Element", "Thickness")
+        }},
+        {"Floor", New List(Of (Cat As String, Prop As String)) From {
+            ("Element", "Area"),
+            ("Element", "Elevation at Top"),
+            ("Element", "Elevation at Bottom"),
+            ("Element", "Element Thickness"),
+            ("Revit Type", "Structural Material")
+        }},
+        {"Structural Framing", New List(Of (Cat As String, Prop As String)) From {
+            ("Element", "Length"),
+            ("Revit Type", "AUR_MATERIAL_TYPE")
+        }},
+        {"Gutter", New List(Of (Cat As String, Prop As String)) From {
+            ("Element", "Host")}} ' Gutter is needed for Roof LoD
+    }
 
     '''<summary>
     ''' Retrieves all descendant elements from the currently selected items in the active Navisworks document.
@@ -108,7 +126,8 @@ Module PropertyExtractionModule
             Dim extractedElement As New Dictionary(Of String, String) From {
                 {"Item.Guid", GetPropertyValueForCSV(selectedElement, "Item", "GUID")},
                 {"Document.Title", GetPropertyValueForCSV(selectedElement, "Document", "Title")},
-                {"Element.Category", GetPropertyValueForCSV(selectedElement, "Element", "Category")}
+                {"Element.Category", GetPropertyValueForCSV(selectedElement, "Element", "Category")},
+                {"Element.Name", GetPropertyValueForCSV(selectedElement, "Element", "Name")}
             }
 
             ' Iterate through each property category and property defined for the supported element type
@@ -140,4 +159,46 @@ Module PropertyExtractionModule
             )
         Return uniqueCatPropList
     End Function
+
+    Public Sub WritePropertiesToCsv()
+
+        Dim outputName As String = InputBox("Please input name for this selection", "Algorithm Output Name")
+        ' Check if the user pressed Cancel or entered an empty string
+        If String.IsNullOrWhiteSpace(outputName) Then
+            Throw New System.Exception("Operation canceled or no file name provided.")
+            Exit Sub
+        End If
+
+        Dim selectedCollection As ModelItemCollection = GetCurrentSelectionAllElements()
+        Dim extractedElements As List(Of Dictionary(Of String, String)) = ExtractProperties(selectedCollection)
+        Dim headerList As List(Of String) = GetUniqueHeaderForCsv()
+        Dim filepath As String = Path.Combine(My.Settings.UserFolderPath, "ExtractData", $"{outputName}.csv")
+
+
+        ' Write to CSV by iterate through the list and using streamwriter
+        Try
+            Using writer As New StreamWriter(filepath, False, Encoding.UTF8)
+                ' Write the header line
+                writer.WriteLine(String.Join(",", headerList))
+                For Each element In extractedElements
+                    Dim rowValues As New List(Of String)()
+
+                    For Each header In headerList
+                        If element.ContainsKey(header) Then
+                            Dim value As String = element(header)
+                            rowValues.Add(value)
+                        Else
+                            ' If the key doesn't exist, leave the field empty
+                            rowValues.Add(String.Empty)
+                        End If
+                    Next
+                    writer.WriteLine(String.Join(",", rowValues))
+                Next
+                writer.Close()
+            End Using
+
+        Catch ex As Exception
+            Throw New System.Exception($"Error saving CSV file: {ex.Message}")
+        End Try
+    End Sub
 End Module

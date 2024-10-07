@@ -126,43 +126,11 @@ Public Class UnisaControl
     End Sub
 
     Private Sub btnExtractProperties_Click(sender As Object, e As EventArgs) Handles btnExtractProperties.Click
-
-        Dim outputName As String = InputBox("Please input name for this selection", "Algorithm Output Name")
-        ' Check if the user pressed Cancel or entered an empty string
-        If String.IsNullOrWhiteSpace(outputName) Then
-            MessageBox.Show("Operation canceled or no file name provided.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return
-        End If
-
-        Dim selectCollection As ModelItemCollection = PropertyExtractionModule.GetCurrentSelectionAllElements()
-        Dim extractedElements As List(Of Dictionary(Of String, String)) = ExtractProperties(selectCollection)
-        Dim headerList As List(Of String) = GetUniqueHeaderForCsv()
-
-        ' Write header
-        Dim csvContent As New StringBuilder()
-        csvContent.AppendLine(String.Join(",", headerList))
-
-        For Each element In extractedElements
-            Dim rowValues As New List(Of String)()
-
-            For Each header In headerList
-                If element.ContainsKey(header) Then
-                    Dim value As String = element(header)
-                    rowValues.Add(value)
-                Else
-                    ' If the key doesn't exist, leave the field empty
-                    rowValues.Add(String.Empty)
-                End If
-            Next
-            csvContent.AppendLine(String.Join(",", rowValues))
-        Next
-
         Try
-            Dim filepath As String = Path.Combine(My.Settings.UserFolderPath, "ExtractData", $"{outputName}.csv")
-            File.WriteAllText(filepath, csvContent.ToString(), Encoding.UTF8)
-            Console.WriteLine("CSV file successfully written.")
+            WritePropertiesToCsv()
+            MessageBox.Show("Extraction is successful")
         Catch ex As Exception
-            MessageBox.Show($"Error saving CSV file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(ex.message)
         End Try
     End Sub
 
