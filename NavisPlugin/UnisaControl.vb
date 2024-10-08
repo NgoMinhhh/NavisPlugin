@@ -127,7 +127,8 @@ Public Class UnisaControl
 
     Private Sub btnExtractProperties_Click(sender As Object, e As EventArgs) Handles btnExtractProperties.Click
         Try
-            WritePropertiesToCsv()
+            Dim filepath = WritePropertiesToCsv()
+            RunLodVerifyer(filepath)
             MessageBox.Show("Extraction is successful")
         Catch ex As Exception
             MessageBox.Show(ex.message)

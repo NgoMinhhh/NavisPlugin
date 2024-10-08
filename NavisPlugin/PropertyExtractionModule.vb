@@ -160,13 +160,12 @@ Module PropertyExtractionModule
         Return uniqueCatPropList
     End Function
 
-    Public Sub WritePropertiesToCsv()
+    Public Function WritePropertiesToCsv() As String
 
         Dim outputName As String = InputBox("Please input name for this selection", "Algorithm Output Name")
         ' Check if the user pressed Cancel or entered an empty string
         If String.IsNullOrWhiteSpace(outputName) Then
             Throw New System.Exception("Operation canceled or no file name provided.")
-            Exit Sub
         End If
 
         Dim selectedCollection As ModelItemCollection = GetCurrentSelectionAllElements()
@@ -199,6 +198,46 @@ Module PropertyExtractionModule
 
         Catch ex As Exception
             Throw New System.Exception($"Error saving CSV file: {ex.Message}")
+        End Try
+        Return filepath
+    End Function
+
+    Public Sub RunLodVerifyer(filepath As String)
+
+        ' Determine the executable's path
+        Dim exePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LoDVerifyer.exe")
+
+        ' Determine the output for algorithm
+        Dim outputFilename As String = Path.GetFileName(filepath)
+        Dim outputPath As String = Path.Combine(My.Settings.UserFolderPath, "AlgoOutput", $"{outputFilename}")
+
+        ' Define arguments required by LoDVerifyer.exe
+        Dim arguments As String = $"""{filepath}"" -o ""{outputPath}"""
+
+
+        Dim startInfo As New ProcessStartInfo With {
+            .FileName = exePath,
+            .Arguments = arguments,
+            .UseShellExecute = False,            ' Required to redirect streams
+            .RedirectStandardOutput = True,      ' Capture standard output
+            .RedirectStandardError = True,       ' (Optional) Capture standard error
+            .CreateNoWindow = True              ' Do not create a window
+            }
+
+        Try
+            ' Initialize the process
+            Using process As New Process()
+                process.StartInfo = startInfo
+                process.Start()
+                ' Wait for the process to exit
+                process.WaitForExit()
+
+                ' Retrieve the exit code
+                exitCode = process.ExitCode
+            End Using
+        Catch ex As Exception
+            ' Handle exceptions (you can choose to re-throw, log, or handle differently)
+            Throw New ApplicationException($"An error occurred while executing '{filepath}': {ex.Message}", ex)
         End Try
     End Sub
 End Module
