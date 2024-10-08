@@ -53,7 +53,7 @@ Partial Class UnisaControl
         Me.tabPlugin.Location = New System.Drawing.Point(0, 0)
         Me.tabPlugin.Name = "tabPlugin"
         Me.tabPlugin.SelectedIndex = 0
-        Me.tabPlugin.Size = New System.Drawing.Size(250, 230)
+        Me.tabPlugin.Size = New System.Drawing.Size(250, 209)
         Me.tabPlugin.TabIndex = 9
         '
         'tpInfo
@@ -70,7 +70,7 @@ Partial Class UnisaControl
         Me.tpInfo.Location = New System.Drawing.Point(4, 25)
         Me.tpInfo.Name = "tpInfo"
         Me.tpInfo.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpInfo.Size = New System.Drawing.Size(242, 201)
+        Me.tpInfo.Size = New System.Drawing.Size(242, 180)
         Me.tpInfo.TabIndex = 0
         Me.tpInfo.Text = "Info"
         Me.tpInfo.UseVisualStyleBackColor = True
@@ -137,13 +137,12 @@ Partial Class UnisaControl
         '
         Me.txbMissingProperties.AllowDrop = True
         Me.txbMissingProperties.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txbMissingProperties.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.txbMissingProperties.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbMissingProperties.Location = New System.Drawing.Point(3, 129)
+        Me.txbMissingProperties.Location = New System.Drawing.Point(6, 124)
         Me.txbMissingProperties.Multiline = True
         Me.txbMissingProperties.Name = "txbMissingProperties"
         Me.txbMissingProperties.ReadOnly = True
-        Me.txbMissingProperties.Size = New System.Drawing.Size(236, 69)
+        Me.txbMissingProperties.Size = New System.Drawing.Size(230, 49)
         Me.txbMissingProperties.TabIndex = 3
         Me.txbMissingProperties.Text = "AUR Material Type, Material"
         Me.txbMissingProperties.WordWrap = False
@@ -166,7 +165,7 @@ Partial Class UnisaControl
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txbGuid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txbGuid.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbGuid.Location = New System.Drawing.Point(61, 6)
+        Me.txbGuid.Location = New System.Drawing.Point(58, 6)
         Me.txbGuid.Name = "txbGuid"
         Me.txbGuid.ReadOnly = True
         Me.txbGuid.Size = New System.Drawing.Size(178, 23)
@@ -179,7 +178,7 @@ Partial Class UnisaControl
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblGuid.AutoSize = True
         Me.lblGuid.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblGuid.Location = New System.Drawing.Point(13, 8)
+        Me.lblGuid.Location = New System.Drawing.Point(10, 8)
         Me.lblGuid.Name = "lblGuid"
         Me.lblGuid.Size = New System.Drawing.Size(42, 17)
         Me.lblGuid.TabIndex = 2
@@ -197,7 +196,7 @@ Partial Class UnisaControl
         Me.tpSettings.Location = New System.Drawing.Point(4, 25)
         Me.tpSettings.Name = "tpSettings"
         Me.tpSettings.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpSettings.Size = New System.Drawing.Size(242, 201)
+        Me.tpSettings.Size = New System.Drawing.Size(242, 180)
         Me.tpSettings.TabIndex = 1
         Me.tpSettings.Text = "Settings"
         Me.tpSettings.UseVisualStyleBackColor = True
@@ -205,7 +204,6 @@ Partial Class UnisaControl
         'lblCurrentLoadout
         '
         Me.lblCurrentLoadout.AutoSize = True
-        Me.lblCurrentLoadout.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.lblCurrentLoadout.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCurrentLoadout.Location = New System.Drawing.Point(3, 104)
         Me.lblCurrentLoadout.Name = "lblCurrentLoadout"
@@ -246,7 +244,7 @@ Partial Class UnisaControl
         Me.btnLoadCsv.Name = "btnLoadCsv"
         Me.btnLoadCsv.Size = New System.Drawing.Size(236, 30)
         Me.btnLoadCsv.TabIndex = 3
-        Me.btnLoadCsv.Text = "Load Algorithm Output"
+        Me.btnLoadCsv.Text = "Load Verified Output"
         Me.btnLoadCsv.UseVisualStyleBackColor = True
         '
         'btnExtractProperties
@@ -258,19 +256,18 @@ Partial Class UnisaControl
         Me.btnExtractProperties.Name = "btnExtractProperties"
         Me.btnExtractProperties.Size = New System.Drawing.Size(236, 30)
         Me.btnExtractProperties.TabIndex = 1
-        Me.btnExtractProperties.Text = "Extract Properties"
+        Me.btnExtractProperties.Text = "Run Verifyer"
         Me.btnExtractProperties.UseVisualStyleBackColor = True
         '
         'txbCsvPath
         '
         Me.txbCsvPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txbCsvPath.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.txbCsvPath.Enabled = False
         Me.txbCsvPath.ImeMode = System.Windows.Forms.ImeMode.Off
         Me.txbCsvPath.Location = New System.Drawing.Point(3, 121)
         Me.txbCsvPath.Multiline = True
         Me.txbCsvPath.Name = "txbCsvPath"
-        Me.txbCsvPath.Size = New System.Drawing.Size(236, 77)
+        Me.txbCsvPath.Size = New System.Drawing.Size(236, 53)
         Me.txbCsvPath.TabIndex = 3
         Me.txbCsvPath.TabStop = False
         '
@@ -280,9 +277,9 @@ Partial Class UnisaControl
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.Controls.Add(Me.tabPlugin)
-        Me.MinimumSize = New System.Drawing.Size(250, 230)
+        Me.MinimumSize = New System.Drawing.Size(250, 200)
         Me.Name = "UnisaControl"
-        Me.Size = New System.Drawing.Size(250, 230)
+        Me.Size = New System.Drawing.Size(250, 209)
         Me.tabPlugin.ResumeLayout(False)
         Me.tpInfo.ResumeLayout(False)
         Me.tpInfo.PerformLayout()

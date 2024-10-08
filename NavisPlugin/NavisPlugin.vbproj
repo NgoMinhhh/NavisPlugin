@@ -77,8 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DemoPlugins.vb" />
+    <Compile Include="CsvResultLoaderModule.vb" />
     <Compile Include="UserFolderPathModule.vb" />
-    <Compile Include="PropertyExtractionModule.vb" />
+    <Compile Include="PropertiesVerifyerModule.vb" />
     <Compile Include="NavisPlugin.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
