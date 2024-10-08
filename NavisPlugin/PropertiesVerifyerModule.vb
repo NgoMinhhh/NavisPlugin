@@ -18,13 +18,12 @@ Module PropertiesVerifyerModule
     ReadOnly AvailableType As New Dictionary(Of String, List(Of (Cat As String, Prop As String))) From {
         {"Wall", New List(Of (Cat As String, Prop As String)) From {
             ("Revit Type", "Width"),
-            ("Revit Type", "AUR_MATERIAL_TYPE"),
+            ("Revit Type", "AUR_MATERIAL TYPE"),
             ("Item", "Material"),
             ("Element", "Area"),
             ("Element", "Unconnected Height"),
-            ("Element", "Length"),
-            ("Element", "Id")
-        }},
+            ("Element", "Length")
+           }},
         {"Roof", New List(Of (Cat As String, Prop As String)) From {
             ("Element", "Thickness"),
             ("Element", "Slope")
@@ -43,7 +42,7 @@ Module PropertiesVerifyerModule
         }},
         {"Structural Framing", New List(Of (Cat As String, Prop As String)) From {
             ("Element", "Length"),
-            ("Revit Type", "AUR_MATERIAL_TYPE")
+            ("Revit Type", "AUR_MATERIAL TYPE")
         }},
         {"Gutter", New List(Of (Cat As String, Prop As String)) From {
             ("Element", "Host")}} ' Gutter is needed for Roof LoD
@@ -210,7 +209,7 @@ Module PropertiesVerifyerModule
 
         ' Determine the output for algorithm
         Dim outputFilename As String = Path.GetFileName(filepath)
-        Dim outputPath As String = Path.Combine(My.Settings.UserFolderPath, "AlgoOutput", $"{outputFilename}")
+        Dim outputPath As String = Path.Combine(My.Settings.UserFolderPath, "AlgoOutput", $"Output_{outputFilename}")
 
         ' Define arguments required by LoDVerifyer.exe
         Dim arguments As String = $"""{filepath}"" ""{outputPath}"""
