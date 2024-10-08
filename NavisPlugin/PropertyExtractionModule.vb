@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Reflection
 Imports System.Text
 Imports Autodesk.Navisworks.Api
 
@@ -205,14 +206,14 @@ Module PropertyExtractionModule
     Public Sub RunLodVerifyer(filepath As String)
 
         ' Determine the executable's path
-        Dim exePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LoDVerifyer.exe")
+        Dim exePath As String = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "LoDVerifyer.exe")
 
         ' Determine the output for algorithm
         Dim outputFilename As String = Path.GetFileName(filepath)
         Dim outputPath As String = Path.Combine(My.Settings.UserFolderPath, "AlgoOutput", $"{outputFilename}")
 
         ' Define arguments required by LoDVerifyer.exe
-        Dim arguments As String = $"""{filepath}"" -o ""{outputPath}"""
+        Dim arguments As String = $"""{filepath}"" ""{outputPath}"""
 
 
         Dim startInfo As New ProcessStartInfo With {
@@ -229,11 +230,23 @@ Module PropertyExtractionModule
             Using process As New Process()
                 process.StartInfo = startInfo
                 process.Start()
+
+                ' Asynchronously read the outputs
+                Dim outputTask As Task(Of String) = process.StandardOutput.ReadToEndAsync()
+                Dim errorTask As Task(Of String) = process.StandardError.ReadToEndAsync()
+
                 ' Wait for the process to exit
                 process.WaitForExit()
 
                 ' Retrieve the exit code
-                exitCode = process.ExitCode
+                Dim exitCode As String = process.ExitCode.ToString()
+
+                ' Get the outputs
+                Dim standardOutput As String = outputTask.Result
+                Dim standardError As String = errorTask.Result
+                Debug.Print($"LoDVerifyer Exit Code: {exitCode}")
+                Debug.Print(outputTask.Result)
+                Debug.Print(errorTask.Result)
             End Using
         Catch ex As Exception
             ' Handle exceptions (you can choose to re-throw, log, or handle differently)

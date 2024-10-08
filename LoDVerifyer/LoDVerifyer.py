@@ -32,7 +32,8 @@ def main(args=None):
 
         result_df.to_csv(args.output, index=False)
         return 0
-    except:
+    except Exception as e:
+        print(f"An error occurred: {e}", file=sys.stderr)
         return 1
 
 
@@ -47,35 +48,11 @@ def create_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
-        "-o",
-        "--output",
+        "output",
         type=Path,
         help="Filepath for output result",
     )
     return parser
-
-
-def clean_column_names(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Creates a new DataFrame with cleaned column names by removing unwanted characters
-    such as line breaks, carriage returns, and leading/trailing spaces.
-
-    Args:
-        df (pd.DataFrame): The input DataFrame with potentially dirty column names.
-
-    Returns:
-        pd.DataFrame: A new DataFrame with cleaned column names.
-    """
-    # Create a copy of the DataFrame to avoid modifying the original one
-    df_copy = df.copy()
-
-    # Clean up column names by removing newlines, carriage returns, and trimming spaces
-    df_copy.columns = df_copy.columns.str.replace(
-        r"[\r\n]+", " ", regex=True
-    )  # Remove newlines
-    df_copy.columns = df_copy.columns.str.strip()  # Remove leading/trailing spaces
-
-    return df_copy
 
 
 # Function to check if a value is missing (NaN or empty)
@@ -98,15 +75,12 @@ def assign_lod(
     Returns:
         pd.DataFrame: A new DataFrame with the LOD levels assigned and missing properties identified.
     """
-    # Create a copy of the DataFrame to avoid modifying the original one
-    df_copy = df.copy()
-
     # Initialize columns
-    df_copy["LOD"] = 100  # Default to LOD 100
-    df_copy["Missing_Properties"] = ""
+    df["LOD"] = 100  # Default to LOD 100
+    df["Missing_Properties"] = ""
 
     # Iterate through the DataFrame rows
-    for i, row in df_copy.iterrows():
+    for i, row in df.iterrows():
         missing_properties = []
         lod_200_all_present = True
 
@@ -119,7 +93,7 @@ def assign_lod(
 
         # If all LOD 200 properties are present, assign LOD 200
         if lod_200_all_present:
-            df_copy.at[i, "LOD"] = 200
+            df.at[i, "LOD"] = 200
 
             # Check for LOD 300 properties (Slope + Gutter)
             lod_300_all_present = True
@@ -134,19 +108,19 @@ def assign_lod(
 
             # If all LOD 300 properties are present, assign LOD 300
             if lod_300_all_present:
-                df_copy.at[i, "LOD"] = 300
+                df.at[i, "LOD"] = 300
 
         # Flag missing properties
-        df_copy.at[i, "Missing_Properties"] = (
+        df.at[i, "Missing_Properties"] = (
             ", ".join(missing_properties) if missing_properties else ""
         )
 
     # Add LOD level indicator columns
-    df_copy["LOD_100"] = (df_copy["LOD"] == 100).astype(int)
-    df_copy["LOD_200"] = (df_copy["LOD"] == 200).astype(int)
-    df_copy["LOD_300"] = (df_copy["LOD"] == 300).astype(int)
+    df["LOD_100"] = (df["LOD"] == 100).astype(int)
+    df["LOD_200"] = (df["LOD"] == 200).astype(int)
+    df["LOD_300"] = (df["LOD"] == 300).astype(int)
 
-    return df_copy
+    return df
 
 
 def process_roof(gutters_df: pd.DataFrame, roofs_df: pd.DataFrame) -> pd.DataFrame:
@@ -166,10 +140,6 @@ def process_roof(gutters_df: pd.DataFrame, roofs_df: pd.DataFrame) -> pd.DataFra
     # If roofs_df or gutters_df is None, skip this dataset
     if roofs_df is None or gutters_df is None:
         return pd.DataFrame()
-
-    # Create copies of the DataFrames to avoid modifying the originals
-    gutters_df = clean_column_names(gutters_df)
-    roofs_df = clean_column_names(roofs_df)
 
     # Check if each roof has a corresponding gutter by matching the Document Title
     roofs_df["Has_Gutter"] = roofs_df["Document.Title"].isin(
@@ -199,9 +169,8 @@ def process_basicwall(basicwall_df: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: A new DataFrame with LOD levels assigned based on the presence
                       of certain properties.
     """
-    # Ensure we are working on a copy to avoid modifying the original DataFrame
-    basicwall_df = clean_column_names(basicwall_df)
-
+    if basicwall_df is None:
+        return pd.DataFrame()
     # Define the properties for LOD 300 and LOD 200
     lod_300_properties = [
         "Element.Area",
@@ -236,9 +205,6 @@ def process_structural_framing(structural_framing_df: pd.DataFrame) -> pd.DataFr
     if structural_framing_df is None:
         return pd.DataFrame()
 
-    # Create a copy of the DataFrame to avoid modifying the original
-    structural_framing_df = clean_column_names(structural_framing_df)
-
     # Define the properties for LOD 300
     lod_300_properties = [
         "Element.Length",
@@ -268,9 +234,6 @@ def process_floors(floors_df: pd.DataFrame) -> pd.DataFrame:
     # If floors_df is None, return an empty DataFrame
     if floors_df is None:
         return pd.DataFrame()
-
-    # Create a copy of the DataFrame to avoid modifying the original
-    floors_df = clean_column_names(floors_df)
 
     # Define the properties for LOD 200 and LOD 300
     lod_200_properties = [
@@ -303,9 +266,6 @@ def process_ceiling(ceilings_df: pd.DataFrame) -> pd.DataFrame:
     # If ceilings_df is None, return an empty DataFrame
     if ceilings_df is None:
         return pd.DataFrame()
-
-    # Create a copy of the DataFrame to avoid modifying the original
-    ceilings_df = clean_column_names(ceilings_df)
 
     # Define the properties for LOD 200 and LOD 300
     lod_200_properties = [

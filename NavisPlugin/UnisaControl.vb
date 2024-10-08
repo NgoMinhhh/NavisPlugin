@@ -129,7 +129,7 @@ Public Class UnisaControl
         Try
             Dim filepath = WritePropertiesToCsv()
             RunLodVerifyer(filepath)
-            MessageBox.Show("Extraction is successful")
+            'MessageBox.Show("Extraction is successful")
         Catch ex As Exception
             MessageBox.Show(ex.message)
         End Try
@@ -255,9 +255,10 @@ Module LoadCsv
 
             ' Read the header line
             Dim headers As String() = parser.ReadFields()
-            Dim guidIndex As Integer = Array.IndexOf(headers, "Item.GUID")
-            Dim lodIndex As Integer = Array.IndexOf(headers, "LOD")
-            Dim missingPropsIndex As Integer = Array.IndexOf(headers, "Missing_Properties")
+            headers = headers.Select(Function(s) s.ToLower()).ToArray()
+            Dim guidIndex As Integer = Array.IndexOf(headers, "item.guid")
+            Dim lodIndex As Integer = Array.IndexOf(headers, "lod")
+            Dim missingPropsIndex As Integer = Array.IndexOf(headers, "missing_properties")
 
             ' Check that all required columns are present
             If guidIndex = -1 OrElse lodIndex = -1 OrElse missingPropsIndex = -1 Then
