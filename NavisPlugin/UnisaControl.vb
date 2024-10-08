@@ -131,7 +131,7 @@ Public Class UnisaControl
             RunLodVerifyer(filepath)
             'MessageBox.Show("Extraction is successful")
         Catch ex As Exception
-            MessageBox.Show(ex.message)
+            MessageBox.Show(ex.Message)
         End Try
     End Sub
 
