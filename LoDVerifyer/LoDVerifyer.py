@@ -21,7 +21,7 @@ def main(args=None):
 
         basicwall_df = process_basicwall(filtered_dfs.get("Walls"))
         roof_df = process_roof(filtered_dfs.get("Gutters"), filtered_dfs.get("Roofs"))
-        structural_framing_df = process_structural_framing(filtered_dfs.get("Walls"))
+        structural_framing_df = process_structural_framing(filtered_dfs.get("Structural Framing"))
         floors_df = process_floors(filtered_dfs.get("Floors"))
         ceiling_df = process_ceiling(filtered_dfs.get("Ceilings"))
 
@@ -209,8 +209,6 @@ def process_structural_framing(structural_framing_df: pd.DataFrame) -> pd.DataFr
     lod_300_properties = [
         "Element.Length",
         "Element.Structural Material",
-        "Element.Name",
-        "Element.Category",
         "Revit Type.AUR_MATERIAL TYPE",
     ]
 
