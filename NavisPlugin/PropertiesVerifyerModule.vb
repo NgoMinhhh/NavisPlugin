@@ -57,8 +57,8 @@ Module PropertiesVerifyerModule
     Public Function GetCurrentSelectionAllElements() As ModelItemCollection
         ' Initialize a new collection to hold all descendant elements
         Dim newCollection As New ModelItemCollection()
-        For Each modelItem In Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
-            newCollection.AddRange(modelItem.DescendantsAndSelf)
+        For Each item In Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
+            newCollection.AddRange(item.DescendantsAndSelf)
         Next
         Return newCollection
     End Function
