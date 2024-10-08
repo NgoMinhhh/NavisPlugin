@@ -1,31 +1,58 @@
+import argparse
 from pathlib import Path
+import sys
 import pandas as pd
-import os
 
 
-def main():
-    input_csv = Path(r"C:\Users\ngonh\UnisaLoDPlugin\ExtractData\sample3.csv")
-    master_df = pd.read_csv(input_csv, index_col=False)
-    unique_categories = master_df["Element.Category"].unique()
-    filtered_dfs = {
-        cat: master_df[master_df["Element.Category"] == cat]
-        for cat in unique_categories
-    }
+def main(args=None):
+    try:
+        if args is None:
+            parser = create_parser()
+            args = parser.parse_args()
 
-    basicwall_df = process_basicwall(filtered_dfs.get("Walls"))
-    roof_df = process_roof(filtered_dfs.get("Gutters"), filtered_dfs.get("Roofs"))
-    structural_framing_df = process_structural_framing(filtered_dfs.get("Walls"))
-    floors_df = process_floors(filtered_dfs.get("Floors"))
-    ceiling_df = process_ceiling(filtered_dfs.get("Ceilings"))
+        input_csv = args.input
 
-    result_df = pd.concat(
-        [basicwall_df, roof_df, structural_framing_df, floors_df, ceiling_df],
-        ignore_index=True,
+        master_df = pd.read_csv(input_csv, index_col=False)
+        unique_categories = master_df["Element.Category"].unique()
+        filtered_dfs = {
+            cat: master_df[master_df["Element.Category"] == cat]
+            for cat in unique_categories
+        }
+
+        basicwall_df = process_basicwall(filtered_dfs.get("Walls"))
+        roof_df = process_roof(filtered_dfs.get("Gutters"), filtered_dfs.get("Roofs"))
+        structural_framing_df = process_structural_framing(filtered_dfs.get("Walls"))
+        floors_df = process_floors(filtered_dfs.get("Floors"))
+        ceiling_df = process_ceiling(filtered_dfs.get("Ceilings"))
+
+        result_df = pd.concat(
+            [basicwall_df, roof_df, structural_framing_df, floors_df, ceiling_df],
+            ignore_index=True,
+        )
+
+        result_df.to_csv(args.output, index=False)
+        return 0
+    except:
+        return 1
+
+
+def create_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="UniSA LoD Verifyer",
+        description="Verify LoD of elements from Naviswokrs model",
     )
 
-    result_df.to_csv(
-        r"C:\Users\ngonh\UnisaLoDPlugin\ExtractData\output.csv", index=False
+    parser.add_argument(
+        "input", type=Path, help="Path to Folder of emails or unzipped subfolders"
     )
+
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=Path,
+        help="Filepath for output result",
+    )
+    return parser
 
 
 def clean_column_names(df: pd.DataFrame) -> pd.DataFrame:
@@ -180,7 +207,6 @@ def process_basicwall(basicwall_df: pd.DataFrame) -> pd.DataFrame:
         "Element.Area",
         "Element.Unconnected Height",
         "Element.Length",
-        "Element.Id",
     ]  # Properties required for LOD 300
 
     lod_200_properties = [
@@ -296,4 +322,4 @@ def process_ceiling(ceilings_df: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
