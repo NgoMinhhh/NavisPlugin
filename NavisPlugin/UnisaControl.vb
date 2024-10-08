@@ -141,6 +141,6 @@ Public Class UnisaControl
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        MessageBox.Show("Result Saved Successfully!", "Save")
+        MessageBox.Show("Not Yet Implemented", "Save")
     End Sub
 End Class

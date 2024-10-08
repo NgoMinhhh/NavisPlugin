@@ -1,5 +1,6 @@
 ﻿Imports Autodesk.Navisworks.Api
 Imports Microsoft.VisualBasic.FileIO
+Imports System.IO
 Imports System.Text
 Imports System.Windows.Forms
 ''' <summary>
@@ -33,6 +34,12 @@ Module CsvResultLoaderModule
         Public Property SearchResult As String
 
         ''' <summary>
+        ''' Gets or sets the source model of the element.
+        ''' </summary>
+        Public Property Source As String
+
+
+        ''' <summary>
         ''' Initializes a new instance of the IngestedElement class with default SearchResult.
         ''' </summary>
         Public Sub New()
@@ -46,10 +53,11 @@ Module CsvResultLoaderModule
         ''' <param name="guid">The GUID of the element.</param>
         ''' <param name="lod">The Level of Detail of the element.</param>
         ''' <param name="missingProps">The missing properties of the element.</param>
-        Public Sub New(guid As String, lod As String, missingProps As String)
+        Public Sub New(guid As String, lod As String, missingProps As String, source As String)
             Me.GUID = guid
             Me.LOD = lod
             MissingProperties = missingProps
+            source = source
             SearchResult = "Not Search Yet" ' Default value
         End Sub
 
@@ -63,6 +71,7 @@ Module CsvResultLoaderModule
             GUID = existingElement.GUID
             LOD = existingElement.LOD
             MissingProperties = existingElement.MissingProperties
+            Source = existingElement.Source
             SearchResult = newSearchResult
         End Sub
 
@@ -71,7 +80,7 @@ Module CsvResultLoaderModule
         ''' </summary>
         ''' <returns>A string containing the GUID, LOD, Missing Properties, and Search Result.</returns>
         Public Overrides Function ToString() As String
-            Return $"GUID: {GUID}, LOD: {LOD}, Missing Properties: {MissingProperties}, Search Result: {SearchResult}"
+            Return $"GUID: {GUID}, LOD: {LOD}, Missing Properties: {MissingProperties}, Source: {Source},Search Result: {SearchResult}"
         End Function
     End Class
 
@@ -83,7 +92,7 @@ Module CsvResultLoaderModule
         Using openFileDialog As New OpenFileDialog()
             openFileDialog.Title = "Select CSV File Containing GUIDs"
             openFileDialog.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            openFileDialog.InitialDirectory = Path.Combine(My.Settings.UserFolderPath, "AlgoOutput")
 
             If openFileDialog.ShowDialog() = DialogResult.OK Then
                 Return openFileDialog.FileName
@@ -115,8 +124,11 @@ Module CsvResultLoaderModule
             ' Read the header line
             Dim headers As String() = parser.ReadFields()
             headers = headers.Select(Function(s) s.ToLower()).ToArray()
+
             Dim guidIndex As Integer = Array.IndexOf(headers, "item.guid")
             Dim lodIndex As Integer = Array.IndexOf(headers, "lod")
+            Dim sourceIndex As Integer = Array.IndexOf(headers, "document.title")
+            Dim alterSourceIndex As Integer = Array.IndexOf(headers, "item.source file")
             Dim missingPropsIndex As Integer = Array.IndexOf(headers, "missing_properties")
 
             ' Check that all required columns are present
@@ -133,9 +145,16 @@ Module CsvResultLoaderModule
                         Dim item As New IngestedElement() With {
                             .GUID = fields(guidIndex).Trim(),
                             .LOD = fields(lodIndex).Trim(),
+                            .Source = "document.title: " & fields(sourceIndex).Trim(),
                             .MissingProperties = fields(missingPropsIndex).Trim()
                         }
                         elementList.Add(item)
+
+                        ' Get source from Source File col
+                        If item.Source = "document.title: " Then
+                            item.Source = "item.source file: " & fields(alterSourceIndex).Trim()
+                        End If
+
                     Else
                         ' Add line with insufficient fields to fail list
                         failList.Append("Line " & parser.LineNumber - 1)
@@ -174,6 +193,11 @@ Module CsvResultLoaderModule
                 ' Initialize the search within the active document's models
                 Dim search As New Search()
                 search.SearchConditions.Add(SearchCondition.HasPropertyByName(PropertyCategoryNames.Item, DataPropertyNames.ItemGuid).EqualValue(VariantData.FromDisplayString(element.GUID)))
+                If element.Source.Split(":")(0) = "document.title" Then
+                    search.SearchConditions.Add(SearchCondition.HasPropertyByDisplayName("Document", "Title").DisplayStringContains(element.Source.Split(":")(1).Trim()))
+                Else
+                    search.SearchConditions.Add(SearchCondition.HasPropertyByDisplayName("Item", "Source File").DisplayStringContains(element.Source.Split(":")(1).Trim()))
+                End If
                 search.Locations = SearchLocations.DescendantsAndSelf
                 search.Selection.SelectAll()
 

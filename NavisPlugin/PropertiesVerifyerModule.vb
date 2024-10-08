@@ -125,6 +125,7 @@ Module PropertiesVerifyerModule
             ' Extract Basic Properties
             Dim extractedElement As New Dictionary(Of String, String) From {
                 {"Item.Guid", GetPropertyValueForCSV(selectedElement, "Item", "GUID")},
+                {"Item.Source File", GetPropertyValueForCSV(selectedElement, "Item", "Source File")},
                 {"Document.Title", GetPropertyValueForCSV(selectedElement, "Document", "Title")},
                 {"Element.Category", GetPropertyValueForCSV(selectedElement, "Element", "Category")},
                 {"Element.Name", GetPropertyValueForCSV(selectedElement, "Element", "Name")}
@@ -144,7 +145,7 @@ Module PropertiesVerifyerModule
     Public Function GetUniqueHeaderForCsv() As List(Of String)
 
         ' Add default header
-        Dim uniqueCatPropList As New List(Of String)() From {"Item.Guid", "Document.Title", "Element.Category", "Element.Name"}
+        Dim uniqueCatPropList As New List(Of String)() From {"Item.Guid", "Document.Title", "Element.Category", "Element.Name", "Item.Source File"}
 
         ' Add to the unique list of "Cat.Prop" strings using LINQ
         uniqueCatPropList.AddRange(AvailableType.SelectMany(Function(kvp) kvp.Value) _
