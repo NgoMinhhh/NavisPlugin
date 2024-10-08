@@ -10,14 +10,18 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		NavisPlugin1.0|Any CPU = NavisPlugin1.0|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F54828B2-86B4-4691-854C-1215D879CE61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F54828B2-86B4-4691-854C-1215D879CE61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F54828B2-86B4-4691-854C-1215D879CE61}.NavisPlugin1.0|Any CPU.ActiveCfg = NavisPlugin1.0|Any CPU
+		{F54828B2-86B4-4691-854C-1215D879CE61}.NavisPlugin1.0|Any CPU.Build.0 = NavisPlugin1.0|Any CPU
 		{F54828B2-86B4-4691-854C-1215D879CE61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F54828B2-86B4-4691-854C-1215D879CE61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7922644F-1F37-4FB8-B1A9-A433E018ED8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7922644F-1F37-4FB8-B1A9-A433E018ED8B}.NavisPlugin1.0|Any CPU.ActiveCfg = Release|Any CPU
 		{7922644F-1F37-4FB8-B1A9-A433E018ED8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

@@ -24,6 +24,9 @@
     <DebugSymbols>true</DebugSymbols>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == '23' ">
+    <OutputPath>bin\23\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="LoDVerifyer.py" />
   </ItemGroup>
