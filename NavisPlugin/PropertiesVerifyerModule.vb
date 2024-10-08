@@ -18,13 +18,12 @@ Module PropertiesVerifyerModule
     ReadOnly AvailableType As New Dictionary(Of String, List(Of (Cat As String, Prop As String))) From {
         {"Wall", New List(Of (Cat As String, Prop As String)) From {
             ("Revit Type", "Width"),
-            ("Revit Type", "AUR_MATERIAL_TYPE"),
+            ("Revit Type", "AUR_MATERIAL TYPE"),
             ("Item", "Material"),
             ("Element", "Area"),
             ("Element", "Unconnected Height"),
-            ("Element", "Length"),
-            ("Element", "Id")
-        }},
+            ("Element", "Length")
+           }},
         {"Roof", New List(Of (Cat As String, Prop As String)) From {
             ("Element", "Thickness"),
             ("Element", "Slope")
@@ -43,7 +42,7 @@ Module PropertiesVerifyerModule
         }},
         {"Structural Framing", New List(Of (Cat As String, Prop As String)) From {
             ("Element", "Length"),
-            ("Revit Type", "AUR_MATERIAL_TYPE")
+            ("Revit Type", "AUR_MATERIAL TYPE")
         }},
         {"Gutter", New List(Of (Cat As String, Prop As String)) From {
             ("Element", "Host")}} ' Gutter is needed for Roof LoD
@@ -126,6 +125,7 @@ Module PropertiesVerifyerModule
             ' Extract Basic Properties
             Dim extractedElement As New Dictionary(Of String, String) From {
                 {"Item.Guid", GetPropertyValueForCSV(selectedElement, "Item", "GUID")},
+                {"Item.Source File", GetPropertyValueForCSV(selectedElement, "Item", "Source File")},
                 {"Document.Title", GetPropertyValueForCSV(selectedElement, "Document", "Title")},
                 {"Element.Category", GetPropertyValueForCSV(selectedElement, "Element", "Category")},
                 {"Element.Name", GetPropertyValueForCSV(selectedElement, "Element", "Name")}
@@ -145,7 +145,7 @@ Module PropertiesVerifyerModule
     Public Function GetUniqueHeaderForCsv() As List(Of String)
 
         ' Add default header
-        Dim uniqueCatPropList As New List(Of String)() From {"Item.Guid", "Document.Title", "Element.Category", "Element.Name"}
+        Dim uniqueCatPropList As New List(Of String)() From {"Item.Guid", "Document.Title", "Element.Category", "Element.Name", "Item.Source File"}
 
         ' Add to the unique list of "Cat.Prop" strings using LINQ
         uniqueCatPropList.AddRange(AvailableType.SelectMany(Function(kvp) kvp.Value) _
@@ -210,7 +210,7 @@ Module PropertiesVerifyerModule
 
         ' Determine the output for algorithm
         Dim outputFilename As String = Path.GetFileName(filepath)
-        Dim outputPath As String = Path.Combine(My.Settings.UserFolderPath, "AlgoOutput", $"{outputFilename}")
+        Dim outputPath As String = Path.Combine(My.Settings.UserFolderPath, "AlgoOutput", $"Output_{outputFilename}")
 
         ' Define arguments required by LoDVerifyer.exe
         Dim arguments As String = $"""{filepath}"" ""{outputPath}"""

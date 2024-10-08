@@ -12,6 +12,9 @@
     <Name>LoDVerifyer</Name>
     <RootNamespace>LoDVerifyer</RootNamespace>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>"C:\Users\ngonh\UnisaLoDPlugin\ExtractData\south.csv" "C:\Users\ngonh\UnisaLoDPlugin\AlgoOutput\Output_south1.csv"</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,7 +42,7 @@
     <Folder Include="dist\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dist\LoDVerifyer.exe" />
+    <None Include="dist\LoDVerifyer.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

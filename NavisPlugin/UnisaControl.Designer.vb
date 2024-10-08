@@ -136,6 +136,8 @@ Partial Class UnisaControl
         'txbMissingProperties
         '
         Me.txbMissingProperties.AllowDrop = True
+        Me.txbMissingProperties.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txbMissingProperties.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txbMissingProperties.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txbMissingProperties.Location = New System.Drawing.Point(6, 124)
@@ -144,7 +146,7 @@ Partial Class UnisaControl
         Me.txbMissingProperties.ReadOnly = True
         Me.txbMissingProperties.Size = New System.Drawing.Size(230, 49)
         Me.txbMissingProperties.TabIndex = 3
-        Me.txbMissingProperties.Text = "AUR Material Type, Material"
+        Me.txbMissingProperties.Text = "No Output is loaded"
         Me.txbMissingProperties.WordWrap = False
         '
         'lblMissingProperpties
@@ -170,7 +172,7 @@ Partial Class UnisaControl
         Me.txbGuid.ReadOnly = True
         Me.txbGuid.Size = New System.Drawing.Size(178, 23)
         Me.txbGuid.TabIndex = 0
-        Me.txbGuid.Text = "83821176-0f08-4614-9cde-a6f875156919"
+        Me.txbGuid.Text = "No Output is loaded"
         '
         'lblGuid
         '
@@ -261,6 +263,8 @@ Partial Class UnisaControl
         '
         'txbCsvPath
         '
+        Me.txbCsvPath.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txbCsvPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txbCsvPath.Enabled = False
         Me.txbCsvPath.ImeMode = System.Windows.Forms.ImeMode.Off

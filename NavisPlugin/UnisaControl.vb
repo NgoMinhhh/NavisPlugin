@@ -27,12 +27,17 @@ Public Class UnisaControl
         AddHandler Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.Changed, AddressOf GetCurrentElementLoDInfo
 
     End Sub
-
+    ''' <summary>
+    ''' Event that resizes the controls on dock pane resizing
+    ''' </summary>
     Protected Overrides Sub OnParentChanged(e As EventArgs)
         MyBase.OnParentChanged(e)
         Dock = DockStyle.Fill
     End Sub
 
+    ''' <summary>
+    ''' This sub will update the info tab based on matching GUID from loaded CSV, subscribed to changing of current selection event
+    ''' </summary>
     Private Sub GetCurrentElementLoDInfo()
         Dim currentElement As ModelItem = Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems.First
         If currentElement Is Nothing Or CurrIngestedElements Is Nothing Then
@@ -129,13 +134,13 @@ Public Class UnisaControl
         Try
             Dim filepath = WritePropertiesToCsv()
             RunLodVerifyer(filepath)
-            'MessageBox.Show("Extraction is successful")
+            MessageBox.Show("Run Verifyer is successful.", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        MessageBox.Show("Result Saved Successfully!", "Save")
+        MessageBox.Show("Not Yet Implemented", "Save")
     End Sub
 End Class

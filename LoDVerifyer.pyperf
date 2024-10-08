@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ProjectTarget>
+    <TargetProject>7922644f-1f37-4fb8-b1a9-a433e018ed8b</TargetProject>
+    <FriendlyName>LoDVerifyer</FriendlyName>
+  </ProjectTarget>
+  <Reports>
+    <Report>
+      <Filename>C:\Users\ngonh\AppData\Local\Temp\LoDVerifyer_20241008.vsp</Filename>
+    </Report>
+  </Reports>
+  <UseVTune>false</UseVTune>
+</ProfilingTarget>
