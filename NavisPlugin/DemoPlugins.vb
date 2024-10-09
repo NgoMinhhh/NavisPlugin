@@ -16,7 +16,7 @@ Imports Autodesk.Navisworks.Api
 Imports Autodesk.Navisworks.Api.Application
 Imports Autodesk.Navisworks.Api.Plugins
 Imports Microsoft.VisualBasic.FileIO
-Namespace NavisPlugin
+Namespace DemoPlugins
 #Region "ExtractProperties"
     <Plugin("ExtractProperties",                                      ' Plugin name
             "CAPS",                                             ' 4 character Developer ID or GUID
