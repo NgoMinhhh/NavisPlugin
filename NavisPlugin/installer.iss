@@ -22,10 +22,10 @@ WizardStyle=modern
 
 [Files]
 ; List of files to include in the installer
-Source: "C:\Users\ngonh\Projects\NavisPlugin\NavisPlugin\bin\NavisPlugin1.0\NavisPlugin.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\ngonh\Projects\NavisPlugin\NavisPlugin\bin\NavisPlugin1.0\LodVerifyer.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\ngonh\Projects\NavisPlugin\NavisPlugin\bin\NavisPlugin1.0\NavisPlugin.dll.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\ngonh\Projects\NavisPlugin\NavisPlugin\bin\NavisPlugin1.0\NavisPlugin.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\ngonh\Projects\NavisPlugin\NavisPlugin\bin\Release\NavisPlugin.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\ngonh\Projects\NavisPlugin\NavisPlugin\bin\Release\LodVerifyer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\ngonh\Projects\NavisPlugin\NavisPlugin\bin\Release\NavisPlugin.dll.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\ngonh\Projects\NavisPlugin\NavisPlugin\bin\Release\NavisPlugin.pdb"; DestDir: "{app}"; Flags: ignoreversion
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
