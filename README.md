@@ -1,9 +1,10 @@
 # Automation in Digital Engineering Using Data Science
 
 <p align="center">
-  <img src="![John_Holland_Logo](https://github.com/user-attachments/assets/24c276b2-271a-42f7-b11e-e70ea06cc36a)" alt="John Holland Group Logo" width="200" align="Left"/>
-  <img src="![unisa-logo](https://github.com/user-attachments/assets/757fa7de-166a-4c37-8ee8-c920876d53ab)" alt="UniSA Logo" width="200"/>
+  <img src="https://github.com/user-attachments/assets/56f2a626-8983-487c-8474-4df20a3cc2d1" alt="John Holland Group Logo" width="200" align="left"/>
+  <img src="https://github.com/user-attachments/assets/757fa7de-166a-4c37-8ee8-c920876d53ab" alt="UniSA Logo" width="200" />
 </p>
+
 
 ## Table of Contents
 - [Overview](#overview)
@@ -69,6 +70,16 @@ Our solution integrates a user-friendly **Navisworks Manage 2025 plugin** with a
    - Select the model you wish to have verified.
    - Click on the **Setting** tab then **Run Verifyer** to start the process.
    - Upon finishing, click on the **Load Output** to select the newest output to display in Navisworks.
+
+### Using the LoDVerifyer
+**LoDVerifyer.exe** is a command-line tool that verifies the Level of Development (LoD) of BIM elements extracted from Navisworks models.
+The application accepts two mandatory arguments:
+1. **Input Path (`input`):**
+   - **Type:** Path to a folder containing emails or unzipped subfolders.
+   - **Description:** Specifies the location of the input data to be processed for LoD verification.
+2. **Output Path (`output`):**
+   - **Type:** Filepath for the output result.
+   - **Description:** Defines where the verification results will be saved.
 
 # Contributors
 
