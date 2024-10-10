@@ -13,7 +13,7 @@
     <RootNamespace>LoDVerifyer</RootNamespace>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>"C:\Users\ngonh\UnisaLoDPlugin\ExtractData\south.csv" "C:\Users\ngonh\UnisaLoDPlugin\AlgoOutput\Output_south1.csv"</CommandLineArguments>
+    <CommandLineArguments>"C:\Users\ngonh\UnisaLoDPlugin\ExtractData\test.csv" "C:\Users\ngonh\UnisaLoDPlugin\AlgoOutput\Output_test1.csv"</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -16,7 +16,7 @@ def main(args=None):
         unique_categories = master_df["Element.Category"].unique()
         filtered_dfs = {
             cat: master_df[master_df["Element.Category"] == cat]
-            for cat in unique_categories
+            for cat in (unique_categories)
         }
 
         basicwall_df = process_basicwall(filtered_dfs.get("Walls"))
@@ -25,11 +25,15 @@ def main(args=None):
         floors_df = process_floors(filtered_dfs.get("Floors"))
         ceiling_df = process_ceiling(filtered_dfs.get("Ceilings"))
 
-        result_df = pd.concat(
-            [basicwall_df, roof_df, structural_framing_df, floors_df, ceiling_df],
-            ignore_index=True,
+
+        verified_df = pd.concat(
+            [basicwall_df, roof_df, structural_framing_df, floors_df, ceiling_df]
         )
 
+        # Create a df for leftover categories to help user edit lod no matter the result
+        non_supported_df = master_df[~master_df.index.isin(verified_df.index)]
+
+        result_df = pd.concat([verified_df,non_supported_df],ignore_index=True)
         result_df.to_csv(args.output, index=False)
         return 0
     except Exception as e:
@@ -280,4 +284,5 @@ def process_ceiling(ceilings_df: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
+    # sys.exit(main())
