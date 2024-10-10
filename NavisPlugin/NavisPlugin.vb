@@ -83,6 +83,12 @@ Namespace UnisaDockPaneAddin
 				Debug.Print(ex.Message)
 			End Try
 
+			Dim testList As List(Of IngestedElement) = IngestCsv("C:\Users\ngonh\UnisaLoDPlugin\AlgoOutput\Output_Test.csv")
+			Dim lod100List = testList.Where(Function(r) r.LOD = 100).ToList()
+			Dim lod200List = testList.Where(Function(r) r.LOD = 200).ToList()
+			Dim lod300List = testList.Where(Function(r) r.LOD = 300).ToList()
+			Dim nullLodList = testList.Where(Function(r) String.IsNullOrEmpty(r.LOD)).ToList()
+			Stop
 			Return 0
 		End Function
 	End Class

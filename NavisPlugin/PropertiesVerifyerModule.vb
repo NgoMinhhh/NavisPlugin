@@ -93,7 +93,7 @@ Module PropertiesVerifyerModule
         Dim extractedElements As New List(Of Dictionary(Of String, String))()
 
         For Each selectedElement In selectedElements
-            If Not selectedElement.IsComposite Then
+            If Not selectedElement.IsComposite OrElse String.IsNullOrEmpty(GetPropertyValueForCSV(selectedElement, "Item", "GUID")) Then
                 Continue For
             End If
 
@@ -117,11 +117,6 @@ Module PropertiesVerifyerModule
                 End Try
             Next
 
-            ' If no supported element type was found, skip to the next element
-            If supportedCat Is Nothing Then
-                Continue For
-            End If
-
             ' Extract Basic Properties
             Dim extractedElement As New Dictionary(Of String, String) From {
                 {"Item.Guid", GetPropertyValueForCSV(selectedElement, "Item", "GUID")},
@@ -131,11 +126,13 @@ Module PropertiesVerifyerModule
                 {"Element.Name", GetPropertyValueForCSV(selectedElement, "Element", "Name")}
             }
 
-            ' Iterate through each property category and property defined for the supported element type
-            For Each propCat In AvailableType(supportedCat)
-                extractedElement.Add($"{propCat.Cat}.{propCat.Prop}", GetPropertyValueForCSV(selectedElement, propCat.Cat, propCat.Prop))
-            Next
-
+            ' If element type is supported, extract specific properties
+            If supportedCat IsNot Nothing Then
+                For Each propCat In AvailableType(supportedCat)
+                    ' Iterate through each property category and property defined for the supported element type
+                    extractedElement.Add($"{propCat.Cat}.{propCat.Prop}", GetPropertyValueForCSV(selectedElement, propCat.Cat, propCat.Prop))
+                Next
+            End If
             extractedElements.Add(extractedElement)
         Next
 
