@@ -61,13 +61,23 @@ Namespace UnisaDockPaneAddin
 			If Autodesk.Navisworks.Api.Application.IsAutomated Then
 				Throw New InvalidOperationException("Invalid when running using Automation")
 			End If
+
+			Dim testList As List(Of IngestedElement) = IngestCsv("C:\Users\ngonh\UnisaLoDPlugin\AlgoOutput\Output_Test1.csv")
+
+			Dim readOutput As New Dictionary(Of String, List(Of IngestedElement)) From {
+				{"100", testList.Where(Function(r) r.LOD = "100").ToList()},
+				{"200", testList.Where(Function(r) r.LOD = "200").ToList()},
+				{"300", testList.Where(Function(r) r.LOD = "300").ToList()},
+				{"notVerified", testList.Where(Function(r) String.IsNullOrEmpty(r.LOD)).ToList()}
+				}
+
+			Dim searchResults As New Dictionary(Of String, ModelItemCollection)
+			For Each key In readOutput.Keys
+				searchResults.Add(key, SearchElements(readOutput(key)).Success)
+			Next
+
 			Dim activeDoc As Document = Application.ActiveDocument
 			Try
-				Dim selectionSet1 As New SelectionSet() With {
-					.DisplayName = "TestChildren1"}
-				Dim selectionSet2 As New SelectionSet() With {
-					.DisplayName = "TestChildren2",
-					.Guid = Guid.NewGuid()}
 				Dim folderItem As New FolderItem() With {
 					.DisplayName = "Test"
 				}
@@ -75,19 +85,18 @@ Namespace UnisaDockPaneAddin
 
 				For Each item In activeDoc.SelectionSets.Value.ToList()
 					If item.DisplayName = "Test" Then
-						activeDoc.SelectionSets.AddCopy(item, selectionSet2)
-						activeDoc.SelectionSets.AddCopy(item, selectionSet1)
+						For Each result In searchResults.Keys
+							Dim selectionSet = New SelectionSet(searchResults(result)) With {
+								.DisplayName = result
+							}
+							activeDoc.SelectionSets.AddCopy(item, selectionSet)
+						Next
 					End If
 				Next
 			Catch ex As Exception
 				Debug.Print(ex.Message)
 			End Try
 
-			Dim testList As List(Of IngestedElement) = IngestCsv("C:\Users\ngonh\UnisaLoDPlugin\AlgoOutput\Output_Test.csv")
-			Dim lod100List = testList.Where(Function(r) r.LOD = 100).ToList()
-			Dim lod200List = testList.Where(Function(r) r.LOD = 200).ToList()
-			Dim lod300List = testList.Where(Function(r) r.LOD = 300).ToList()
-			Dim nullLodList = testList.Where(Function(r) String.IsNullOrEmpty(r.LOD)).ToList()
 			Stop
 			Return 0
 		End Function
