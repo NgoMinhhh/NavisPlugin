@@ -32,8 +32,10 @@ def main(args=None):
 
         # Create a df for leftover categories to help user edit lod no matter the result
         non_supported_df = master_df[~master_df.index.isin(verified_df.index)]
+        non_supported_df['LOD']=""
 
-        result_df = pd.concat([verified_df,non_supported_df],ignore_index=True)
+        result_df = pd.concat([verified_df,non_supported_df],ignore_index=True, sort=False)
+        result_df['LOD'] = result_df['LOD'].astype(str)
         result_df.to_csv(args.output, index=False)
         return 0
     except Exception as e:
