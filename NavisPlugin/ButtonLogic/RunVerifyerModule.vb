@@ -7,7 +7,7 @@ Imports Autodesk.Navisworks.Api
 ''' Provides functionalities to extract properties from selected Navisworks elements based on predefined mappings.
 ''' This module handles the validation of elements, extraction of necessary properties, formatting the data for    output, and call the LoDVerifyer underneath to return the output.
 ''' </summary>
-Module PropertiesVerifyerModule
+Module RunVerifyerModule
 
     ''' <summary>
     ''' Stores the mapping of supported element types to their required properties for identifying Level of Detail (LoD).

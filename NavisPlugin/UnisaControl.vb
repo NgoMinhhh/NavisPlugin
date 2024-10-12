@@ -20,7 +20,7 @@ Public Class UnisaControl
 
         ' Ask for User Folder Path to store AppData if there is none
         If My.Settings.UserFolderPath Is Nothing Then
-            UserFolderPathModule.SetUserFolderPath()
+            SetAppDataFolderModule.SetUserFolderPath()
         End If
 
         ' Event listener to detect change in current selection and update info panel accordingly
@@ -114,7 +114,7 @@ Public Class UnisaControl
                                                      MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
             ' User chose "Yes" which we'll interpret as "Change"
-            UserFolderPathModule.SetUserFolderPath()
+            SetAppDataFolderModule.SetUserFolderPath()
         End If
     End Sub
 

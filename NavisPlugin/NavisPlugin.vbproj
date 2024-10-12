@@ -110,9 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DemoPlugins.vb" />
-    <Compile Include="CsvResultLoaderModule.vb" />
-    <Compile Include="UserFolderPathModule.vb" />
-    <Compile Include="PropertiesVerifyerModule.vb" />
+    <Compile Include="ButtonLogic\LoadVerifyedOutputModule.vb" />
+    <Compile Include="ButtonLogic\SetAppDataFolderModule.vb" />
+    <Compile Include="ButtonLogic\RunVerifyerModule.vb" />
     <Compile Include="NavisPlugin.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

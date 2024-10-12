@@ -4,7 +4,7 @@ Imports System.Windows.Forms
 ''' <summary>
 ''' Provides functionalities for user interactions related to user folder path selection and validation.
 ''' </summary>
-Module UserFolderPathModule
+Module SetAppDataFolderModule
 
     ''' <summary>
     ''' Prompts the user to select a base folder, validates it, ensures required subfolders exist,

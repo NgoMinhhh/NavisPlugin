@@ -6,7 +6,7 @@ Imports System.Windows.Forms
 ''' <summary>
 ''' Related class and functions to create a selection set from GUIDs listed in a CSV file
 ''' </summary>
-Module CsvResultLoaderModule
+Module LoadVerifyedOutputModule
     ''' <summary>
     ''' Represents an element ingested from the CSV file, containing necessary properties.
     ''' </summary>

@@ -101,7 +101,7 @@ Partial Class UnisaControl
         Me.cmbLoD.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbLoD.FormattingEnabled = True
-        Me.cmbLoD.Items.AddRange(New Object() {"300", "200"})
+        Me.cmbLoD.Items.AddRange(New Object() {"400", "350", "300", "200", "100"})
         Me.cmbLoD.Location = New System.Drawing.Point(58, 65)
         Me.cmbLoD.Name = "cmbLoD"
         Me.cmbLoD.Size = New System.Drawing.Size(178, 24)
