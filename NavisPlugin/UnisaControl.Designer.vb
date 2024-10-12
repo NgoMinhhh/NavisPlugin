@@ -263,12 +263,12 @@ Partial Class UnisaControl
         '
         'txbCsvPath
         '
-        Me.txbCsvPath.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txbCsvPath.AccessibleRole = System.Windows.Forms.AccessibleRole.None
         Me.txbCsvPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txbCsvPath.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.txbCsvPath.Enabled = False
         Me.txbCsvPath.ImeMode = System.Windows.Forms.ImeMode.Off
-        Me.txbCsvPath.Location = New System.Drawing.Point(3, 121)
+        Me.txbCsvPath.Location = New System.Drawing.Point(3, 124)
         Me.txbCsvPath.Multiline = True
         Me.txbCsvPath.Name = "txbCsvPath"
         Me.txbCsvPath.Size = New System.Drawing.Size(236, 53)

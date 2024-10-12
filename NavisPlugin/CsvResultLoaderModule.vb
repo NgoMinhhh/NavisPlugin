@@ -178,13 +178,13 @@ Module CsvResultLoaderModule
     ''' </summary>
     ''' <param name="elementList">A list of IngestedElement objects containing GUIDs to search for.</param>
     ''' <returns>A tuple containing a collection of successfully found ModelItems and a list of failed IngestedElements.</returns>
-    Public Function SearchElements(elementList As List(Of IngestedElement)) As (Success As ModelItemCollection, Fails As List(Of IngestedElement))
+    Public Function SearchElements(elementList As List(Of IngestedElement)) As ModelItemCollection
+
         Dim foundElements As New ModelItemCollection()
-        Dim errorElements As New List(Of IngestedElement)()
 
         ' Validate input list
         If elementList Is Nothing OrElse elementList.Count = 0 Then
-            Throw New ArgumentException("The GUID list cannot be null or empty.", NameOf(elementList))
+            Return New ModelItemCollection()
         End If
 
         ' Iterate through each element and search for the corresponding ModelItem
@@ -206,21 +206,55 @@ Module CsvResultLoaderModule
                 ' Add the found item to the collection if it exists
                 If foundItem IsNot Nothing Then
                     foundElements.Add(foundItem)
-                Else
-                    ' Add to error list if the GUID does not correspond to any ModelItem
-                    Dim errorElement As New IngestedElement(element, "Not Found")
-                    errorElements.Add(errorElement)
                 End If
-
             Catch ex As Exception
-                ' Add to error list if an exception occurs during the search
-                Dim errorElement As New IngestedElement(element, $"Error: {ex.Message}")
-                errorElements.Add(errorElement)
+                Continue For
             End Try
         Next
 
         ' Return the tuple containing successful and failed searches
-        Return (foundElements, errorElements)
+        Return foundElements
     End Function
 
+
+    Public Sub CreateLoDSelectionSets(folderName As String, ingestedList As List(Of IngestedElement))
+        ' Create a dict of IngestedElements based on LOD value
+        Dim readOutput As New Dictionary(Of String, List(Of IngestedElement)) From {
+                {"100", ingestedList.Where(Function(r) r.LOD = "100").ToList()},
+                {"200", ingestedList.Where(Function(r) r.LOD = "200").ToList()},
+                {"300", ingestedList.Where(Function(r) r.LOD = "300").ToList()},
+                {"notVerified", ingestedList.Where(Function(r) String.IsNullOrEmpty(r.LOD)).ToList()}
+                }
+        ' Create the same dict with value as search result
+        Dim searchResults As New Dictionary(Of String, ModelItemCollection)
+        For Each key In readOutput.Keys
+            searchResults.Add(key, SearchElements(readOutput(key)))
+        Next
+
+        Dim activeDoc As Document = Autodesk.Navisworks.Api.Application.ActiveDocument
+        Try
+            ' Create a folder to group the LoD selection sets
+            Dim folderItem As New FolderItem() With {
+                .DisplayName = folderName
+            }
+            activeDoc.SelectionSets.AddCopy(folderItem)
+
+            ' Loop through each sets to find the folder because Navisworks use GUID as the primary key
+            ' Newly created folder's reference is not stored
+            For Each item In activeDoc.SelectionSets.Value.ToList()
+                If item.DisplayName = folderName Then
+                    For Each lod In searchResults.Keys
+                        If searchResults(lod).Count > 0 Then
+                            Dim selectionSet = New SelectionSet(searchResults(lod)) With {
+                            .DisplayName = lod
+                        }
+                            activeDoc.SelectionSets.AddCopy(item, selectionSet)
+                        End If
+                    Next
+                End If
+            Next
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
 End Module

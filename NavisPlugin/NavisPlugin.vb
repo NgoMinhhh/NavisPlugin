@@ -73,7 +73,7 @@ Namespace UnisaDockPaneAddin
 
 			Dim searchResults As New Dictionary(Of String, ModelItemCollection)
 			For Each key In readOutput.Keys
-				searchResults.Add(key, SearchElements(readOutput(key)).Success)
+				searchResults.Add(key, SearchElements(readOutput(key)))
 			Next
 
 			Dim activeDoc As Document = Application.ActiveDocument

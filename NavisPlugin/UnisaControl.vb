@@ -55,18 +55,20 @@ Public Class UnisaControl
             For Each ingestedElement As IngestedElement In CurrIngestedElements
                 If currentGuid = ingestedElement.GUID Then
                     txbGuid.Text = ingestedElement.GUID
-                    cmbStatus.SelectedText = "Verified"
                     cmbLoD.SelectedText = ingestedElement.LOD
                     txbMissingProperties.Text = ingestedElement.MissingProperties
-                    isVerified = True
+
+                    If String.IsNullOrWhiteSpace(ingestedElement.LOD) Then
+                        cmbStatus.SelectedText = "Not Verified"
+                    Else
+                        cmbStatus.SelectedText = "Verified"
+                    End If
+
                     Exit For
                 End If
 
             Next
 
-            If Not isVerified Then
-                cmbStatus.SelectedText = "Not Verified"
-            End If
         Catch ex As Exception
             cmbStatus.SelectedText = "Error"
         End Try
@@ -83,30 +85,16 @@ Public Class UnisaControl
             ' Ingest elements from the selected CSV file
             CurrIngestedElements = IngestCsv(CsvFilePath)
 
-            ' Declare variables to hold the results
-            Dim successfulItems As ModelItemCollection
-            Dim failedElements As List(Of IngestedElement)
+            ' Take {test2_20241011-105833} from filename {Output_test2_20241011-105833} as folder for selection Sets
+            Dim folderName As String = Path.GetFileName(CsvFilePath).Substring(7)
+            CreateLoDSelectionSets(folderName, CurrIngestedElements)
 
-            ' Call the SearchElements function and assign the results
-            Dim result As (Success As ModelItemCollection, Fails As List(Of IngestedElement)) = SearchElements(CurrIngestedElements)
-            successfulItems = result.Success
-            failedElements = result.Fails
-
-            ' Extract a name portion from the CSV filename for the selection set
-            Dim extractedName As String = Path.GetFileNameWithoutExtension(CsvFilePath).Replace("Output_", "")
-            Dim selectionSet As New SelectionSet(successfulItems) With {
-                .DisplayName = $"{extractedName}"
-            }
-
-            ' Add the created selection set to the document's selection sets collection
-            Autodesk.Navisworks.Api.Application.ActiveDocument.SelectionSets.InsertCopy(0, selectionSet)
-
-            ' Apply the selection set to the current selection in the document
-            With Autodesk.Navisworks.Api.Application.ActiveDocument
-                .Models.ResetAllHidden() ' Unhide all model items
-                .CurrentSelection.Clear()
-                .CurrentSelection.CopyFrom(successfulItems)
-            End With
+            ''' Apply the selection set to the current selection in the document
+            'With Autodesk.Navisworks.Api.Application.ActiveDocument
+            '    .Models.ResetAllHidden() ' Unhide all model items
+            '    .CurrentSelection.Clear()
+            '    .CurrentSelection.CopyFrom(folderName)
+            'End With
 
             ' Change content of texbox displaying current file path
             txbCsvPath.Text = CsvFilePath
