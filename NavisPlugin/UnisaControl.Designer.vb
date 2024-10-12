@@ -24,7 +24,7 @@ Partial Class UnisaControl
     Private Sub InitializeComponent()
         Me.tabPlugin = New System.Windows.Forms.TabControl()
         Me.tpInfo = New System.Windows.Forms.TabPage()
-        Me.btnSave = New System.Windows.Forms.Button()
+        Me.BtnSave = New System.Windows.Forms.Button()
         Me.cmbStatus = New System.Windows.Forms.ComboBox()
         Me.cmbLoD = New System.Windows.Forms.ComboBox()
         Me.lblStatus = New System.Windows.Forms.Label()
@@ -37,8 +37,8 @@ Partial Class UnisaControl
         Me.lblCurrentLoadout = New System.Windows.Forms.Label()
         Me.btnSetUserFolderPath = New System.Windows.Forms.Button()
         Me.txbInfo = New System.Windows.Forms.TextBox()
-        Me.btnLoadCsv = New System.Windows.Forms.Button()
-        Me.btnExtractProperties = New System.Windows.Forms.Button()
+        Me.BtnLoadVerifyerOutput = New System.Windows.Forms.Button()
+        Me.BtnRunVerifyer = New System.Windows.Forms.Button()
         Me.txbCsvPath = New System.Windows.Forms.TextBox()
         Me.tabPlugin.SuspendLayout()
         Me.tpInfo.SuspendLayout()
@@ -58,7 +58,7 @@ Partial Class UnisaControl
         '
         'tpInfo
         '
-        Me.tpInfo.Controls.Add(Me.btnSave)
+        Me.tpInfo.Controls.Add(Me.BtnSave)
         Me.tpInfo.Controls.Add(Me.cmbStatus)
         Me.tpInfo.Controls.Add(Me.cmbLoD)
         Me.tpInfo.Controls.Add(Me.lblStatus)
@@ -75,15 +75,16 @@ Partial Class UnisaControl
         Me.tpInfo.Text = "Info"
         Me.tpInfo.UseVisualStyleBackColor = True
         '
-        'btnSave
+        'BtnSave
         '
-        Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSave.Location = New System.Drawing.Point(161, 95)
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(75, 23)
-        Me.btnSave.TabIndex = 11
-        Me.btnSave.Text = "Save"
-        Me.btnSave.UseVisualStyleBackColor = True
+        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSave.Enabled = False
+        Me.BtnSave.Location = New System.Drawing.Point(161, 95)
+        Me.BtnSave.Name = "BtnSave"
+        Me.BtnSave.Size = New System.Drawing.Size(75, 23)
+        Me.BtnSave.TabIndex = 11
+        Me.BtnSave.Text = "Save"
+        Me.BtnSave.UseVisualStyleBackColor = True
         '
         'cmbStatus
         '
@@ -192,8 +193,8 @@ Partial Class UnisaControl
         Me.tpSettings.Controls.Add(Me.lblCurrentLoadout)
         Me.tpSettings.Controls.Add(Me.btnSetUserFolderPath)
         Me.tpSettings.Controls.Add(Me.txbInfo)
-        Me.tpSettings.Controls.Add(Me.btnLoadCsv)
-        Me.tpSettings.Controls.Add(Me.btnExtractProperties)
+        Me.tpSettings.Controls.Add(Me.BtnLoadVerifyerOutput)
+        Me.tpSettings.Controls.Add(Me.BtnRunVerifyer)
         Me.tpSettings.Controls.Add(Me.txbCsvPath)
         Me.tpSettings.Location = New System.Drawing.Point(4, 25)
         Me.tpSettings.Name = "tpSettings"
@@ -238,28 +239,28 @@ Partial Class UnisaControl
         Me.txbInfo.TabStop = False
         Me.txbInfo.WordWrap = False
         '
-        'btnLoadCsv
+        'BtnLoadVerifyerOutput
         '
-        Me.btnLoadCsv.Dock = System.Windows.Forms.DockStyle.Top
-        Me.btnLoadCsv.Location = New System.Drawing.Point(3, 33)
-        Me.btnLoadCsv.Margin = New System.Windows.Forms.Padding(8)
-        Me.btnLoadCsv.Name = "btnLoadCsv"
-        Me.btnLoadCsv.Size = New System.Drawing.Size(236, 30)
-        Me.btnLoadCsv.TabIndex = 3
-        Me.btnLoadCsv.Text = "Load Verified Output"
-        Me.btnLoadCsv.UseVisualStyleBackColor = True
+        Me.BtnLoadVerifyerOutput.Dock = System.Windows.Forms.DockStyle.Top
+        Me.BtnLoadVerifyerOutput.Location = New System.Drawing.Point(3, 33)
+        Me.BtnLoadVerifyerOutput.Margin = New System.Windows.Forms.Padding(8)
+        Me.BtnLoadVerifyerOutput.Name = "BtnLoadVerifyerOutput"
+        Me.BtnLoadVerifyerOutput.Size = New System.Drawing.Size(236, 30)
+        Me.BtnLoadVerifyerOutput.TabIndex = 3
+        Me.BtnLoadVerifyerOutput.Text = "Load Verified Output"
+        Me.BtnLoadVerifyerOutput.UseVisualStyleBackColor = True
         '
-        'btnExtractProperties
+        'BtnRunVerifyer
         '
-        Me.btnExtractProperties.Dock = System.Windows.Forms.DockStyle.Top
-        Me.btnExtractProperties.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.btnExtractProperties.Location = New System.Drawing.Point(3, 3)
-        Me.btnExtractProperties.Margin = New System.Windows.Forms.Padding(8)
-        Me.btnExtractProperties.Name = "btnExtractProperties"
-        Me.btnExtractProperties.Size = New System.Drawing.Size(236, 30)
-        Me.btnExtractProperties.TabIndex = 1
-        Me.btnExtractProperties.Text = "Run Verifyer"
-        Me.btnExtractProperties.UseVisualStyleBackColor = True
+        Me.BtnRunVerifyer.Dock = System.Windows.Forms.DockStyle.Top
+        Me.BtnRunVerifyer.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.BtnRunVerifyer.Location = New System.Drawing.Point(3, 3)
+        Me.BtnRunVerifyer.Margin = New System.Windows.Forms.Padding(8)
+        Me.BtnRunVerifyer.Name = "BtnRunVerifyer"
+        Me.BtnRunVerifyer.Size = New System.Drawing.Size(236, 30)
+        Me.BtnRunVerifyer.TabIndex = 1
+        Me.BtnRunVerifyer.Text = "Run Verifyer"
+        Me.BtnRunVerifyer.UseVisualStyleBackColor = True
         '
         'txbCsvPath
         '
@@ -301,13 +302,13 @@ Partial Class UnisaControl
     Friend WithEvents lblMissingProperpties As Windows.Forms.Label
     Friend WithEvents txbGuid As Windows.Forms.TextBox
     Friend WithEvents lblLoD As Windows.Forms.Label
-    Friend WithEvents btnLoadCsv As Windows.Forms.Button
-    Friend WithEvents btnExtractProperties As Windows.Forms.Button
+    Friend WithEvents BtnLoadVerifyerOutput As Windows.Forms.Button
+    Friend WithEvents BtnRunVerifyer As Windows.Forms.Button
     Friend WithEvents txbCsvPath As Windows.Forms.TextBox
     Friend WithEvents txbInfo As Windows.Forms.TextBox
     Friend WithEvents cmbStatus As Windows.Forms.ComboBox
     Friend WithEvents cmbLoD As Windows.Forms.ComboBox
     Friend WithEvents btnSetUserFolderPath As Windows.Forms.Button
-    Friend WithEvents btnSave As Windows.Forms.Button
+    Friend WithEvents BtnSave As Windows.Forms.Button
     Friend WithEvents lblCurrentLoadout As Windows.Forms.Label
 End Class

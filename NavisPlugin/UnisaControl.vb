@@ -64,7 +64,11 @@ Public Class UnisaControl
                         cmbStatus.SelectedText = "Verified"
                     End If
 
+                    ' Enable Save Button
+                    BtnSave.Enabled = True
                     Exit For
+                Else
+                    BtnSave.Enabled = False
                 End If
 
             Next
@@ -74,7 +78,7 @@ Public Class UnisaControl
         End Try
     End Sub
 
-    Private Sub btnLoadCsv_Click(sender As Object, e As EventArgs) Handles btnLoadCsv.Click
+    Private Sub BtnLoadVerifyerOutput_Click(sender As Object, e As EventArgs) Handles BtnLoadVerifyerOutput.Click
         Dim CsvFilePath As String = GetCsvFilePath()
         If CsvFilePath Is String.Empty Then
             MessageBox.Show("No CSV file is chosen!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -118,7 +122,7 @@ Public Class UnisaControl
         End If
     End Sub
 
-    Private Sub btnExtractProperties_Click(sender As Object, e As EventArgs) Handles btnExtractProperties.Click
+    Private Sub BtnRunVerifyer_Click(sender As Object, e As EventArgs) Handles BtnRunVerifyer.Click
         Try
             Dim filepath = WritePropertiesToCsv()
             RunLodVerifyer(filepath)
@@ -128,7 +132,17 @@ Public Class UnisaControl
         End Try
     End Sub
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        MessageBox.Show("Not Yet Implemented", "Save")
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+
+        Try
+            For Each currIngestedElement In CurrIngestedElements
+                If txbGuid.Text = currIngestedElement.GUID Then
+                    currIngestedElement.LOD = cmbLoD.Text
+                    Exit For
+                End If
+            Next
+        Catch ex As Exception
+            MessageBox.Show("Not Yet Implemented", "Save")
+        End Try
     End Sub
 End Class
