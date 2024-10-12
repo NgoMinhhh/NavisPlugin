@@ -78,10 +78,11 @@ Partial Class UnisaControl
         'BtnSave
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSave.AutoSize = True
         Me.BtnSave.Enabled = False
         Me.BtnSave.Location = New System.Drawing.Point(161, 95)
         Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(75, 23)
+        Me.BtnSave.Size = New System.Drawing.Size(75, 26)
         Me.BtnSave.TabIndex = 11
         Me.BtnSave.Text = "Save"
         Me.BtnSave.UseVisualStyleBackColor = True

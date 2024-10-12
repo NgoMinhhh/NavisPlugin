@@ -24,7 +24,7 @@ Public Class UnisaControl
         End If
 
         ' Event listener to detect change in current selection and update info panel accordingly
-        AddHandler Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.Changed, AddressOf GetCurrentElementLoDInfo
+        AddHandler Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.Changed, AddressOf UpdateInfoTab
 
     End Sub
     ''' <summary>
@@ -38,44 +38,72 @@ Public Class UnisaControl
     ''' <summary>
     ''' This sub will update the info tab based on matching GUID from loaded CSV, subscribed to changing of current selection event
     ''' </summary>
-    Private Sub GetCurrentElementLoDInfo()
-        Dim currentElement As ModelItem = Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems.First
-        If currentElement Is Nothing Or CurrIngestedElements Is Nothing Then
-            Exit Sub
-        End If
+    Private Sub UpdateInfoTab()
 
         ' Reset the display
         txbGuid.Clear()
         cmbStatus.Text = String.Empty
         cmbLoD.Text = String.Empty
         txbMissingProperties.Clear()
-        Try
-            Dim currentGuid As String = currentElement.PropertyCategories.FindPropertyByName(PropertyCategoryNames.Item, DataPropertyNames.ItemGuid).Value.ToDisplayString()
-            Dim isVerified As Boolean = False
-            For Each ingestedElement As IngestedElement In CurrIngestedElements
-                If currentGuid = ingestedElement.GUID Then
-                    txbGuid.Text = ingestedElement.GUID
-                    cmbLoD.SelectedText = ingestedElement.LOD
-                    txbMissingProperties.Text = ingestedElement.MissingProperties
+        BtnSave.Text = "Save"
+        BtnSave.Enabled = False
 
-                    If String.IsNullOrWhiteSpace(ingestedElement.LOD) Then
-                        cmbStatus.SelectedText = "Not Verified"
-                    Else
-                        cmbStatus.SelectedText = "Verified"
-                    End If
+        ' Detect multiple selection to change save button to bulk save
+        Dim currentSelection As ModelItemCollection = Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
+        Select Case currentSelection.Count
+            Case 1
+                Try
+                    Dim currentGuid As String = currentSelection.First.PropertyCategories.FindPropertyByName(PropertyCategoryNames.Item, DataPropertyNames.ItemGuid).Value.ToDisplayString()
+                    For Each ingestedElement As IngestedElement In CurrIngestedElements
+                        If currentGuid = ingestedElement.GUID Then
+                            txbGuid.Text = ingestedElement.GUID
+                            cmbLoD.SelectedText = ingestedElement.LOD
+                            txbMissingProperties.Text = ingestedElement.MissingProperties
 
-                    ' Enable Save Button
+                            If String.IsNullOrWhiteSpace(ingestedElement.LOD) Then
+                                cmbStatus.SelectedText = "Not Verified"
+                            Else
+                                cmbStatus.SelectedText = "Verified"
+                            End If
+
+                            ' Enable Save Button
+                            BtnSave.Enabled = True
+                            Exit For
+                        Else
+                            BtnSave.Enabled = False
+                        End If
+
+                    Next
+
+                Catch ex As Exception
+                    cmbStatus.SelectedText = "Error"
+                End Try
+            Case Is >= 2
+                Dim selectedGuids As New List(Of String)()
+                For Each modelItem In currentSelection
+                    selectedGuids.Add(modelItem.PropertyCategories.FindPropertyByName(PropertyCategoryNames.Item, DataPropertyNames.ItemGuid).Value.ToDisplayString())
+                Next
+
+                Dim ingestedGuids As New List(Of String)()
+                For Each ingestedElement In CurrIngestedElements
+                    ingestedGuids.Add(ingestedElement.GUID)
+                Next
+                ' Create a HashSet from ingestedGuids for efficient lookups
+                Dim ingestedGuidsSet As New HashSet(Of String)(ingestedGuids)
+
+                ' Check if all selectedGuids are in ingestedGuids
+                Dim allFound As Boolean = selectedGuids.All(Function(sg) ingestedGuidsSet.Contains(sg))
+                If allFound Then
+                    txbGuid.Text = "Bulk Edit Mode"
+                    txbMissingProperties.Text = "Bulk Edit Mode"
                     BtnSave.Enabled = True
-                    Exit For
-                Else
-                    BtnSave.Enabled = False
+                    BtnSave.Text = "Bulk Save"
                 End If
+            Case Else
+                Exit Sub
+        End Select
 
-            Next
 
-        Catch ex As Exception
-            cmbStatus.SelectedText = "Error"
-        End Try
     End Sub
 
     Private Sub BtnLoadVerifyerOutput_Click(sender As Object, e As EventArgs) Handles BtnLoadVerifyerOutput.Click
