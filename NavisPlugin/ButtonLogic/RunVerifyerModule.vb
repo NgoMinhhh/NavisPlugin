@@ -169,8 +169,8 @@ Module RunVerifyerModule
         Dim selectedCollection As ModelItemCollection = GetCurrentSelectionAllElements()
         Dim extractedElements As List(Of Dictionary(Of String, String)) = ExtractProperties(selectedCollection)
         Dim headerList As List(Of String) = GetUniqueHeaderForCsv()
-        ' Extract CSV file name will be: Output_Test2_20241011-105833.csv
-        Dim filepath As String = Path.Combine(My.Settings.UserFolderPath, "ExtractData", $"{outputName}_{Date.Now:yyyyMMdd-HHmmss}.csv")
+        ' Extract CSV file name will be: Output_Test2.csv
+        Dim filepath As String = Path.Combine(My.Settings.UserFolderPath, "ExtractData", $"{outputName}.csv")
 
 
         ' Write to CSV by iterate through the list and using streamwriter

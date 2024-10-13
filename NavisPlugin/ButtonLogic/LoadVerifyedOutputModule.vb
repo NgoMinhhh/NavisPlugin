@@ -106,9 +106,10 @@ Module LoadVerifyedOutputModule
     ''' </summary>
     ''' <param name="CsvFilePath">The full path to the CSV file.</param>
     ''' <returns>A list of IngestedElement objects extracted from the CSV.</returns>
-    Public Function IngestCsv(CsvFilePath As String) As List(Of IngestedElement)
+    Public Function IngestCsv(CsvFilePath As String) As (Content As List(Of IngestedElement), guidIndex As Integer, lodIndex As Integer)
         Dim elementList As New List(Of IngestedElement)()
-        Dim failList As New StringBuilder()
+        ' These two index are required to update the csv with new lod values from user editing
+        Dim guidIndex As Integer, lodIndex As Integer
 
         ' Initialize the TextFieldParser to read the CSV file
         Using parser As New TextFieldParser(CsvFilePath)
@@ -125,8 +126,8 @@ Module LoadVerifyedOutputModule
             Dim headers As String() = parser.ReadFields()
             headers = headers.Select(Function(s) s.ToLower()).ToArray()
 
-            Dim guidIndex As Integer = Array.IndexOf(headers, "item.guid")
-            Dim lodIndex As Integer = Array.IndexOf(headers, "lod")
+            guidIndex = Array.IndexOf(headers, "item.guid")
+            lodIndex = Array.IndexOf(headers, "lod")
             Dim sourceIndex As Integer = Array.IndexOf(headers, "document.title")
             Dim alterSourceIndex As Integer = Array.IndexOf(headers, "item.source file")
             Dim missingPropsIndex As Integer = Array.IndexOf(headers, "missing_properties")
@@ -146,7 +147,8 @@ Module LoadVerifyedOutputModule
                             .GUID = fields(guidIndex).Trim(),
                             .LOD = fields(lodIndex).Trim(),
                             .Source = "document.title: " & fields(sourceIndex).Trim(),
-                            .MissingProperties = fields(missingPropsIndex).Trim()
+                            .MissingProperties = fields(missingPropsIndex).Trim(),
+                            .SearchResult = "Verified"
                         }
                         elementList.Add(item)
 
@@ -154,23 +156,13 @@ Module LoadVerifyedOutputModule
                         If item.Source = "document.title: " Then
                             item.Source = "item.source file: " & fields(alterSourceIndex).Trim()
                         End If
-
-                    Else
-                        ' Add line with insufficient fields to fail list
-                        failList.Append("Line " & parser.LineNumber - 1)
                     End If
                 Catch ex As MalformedLineException
                     ' Add malformed line information to fail list
-                    failList.Append("Line " & ex.Message)
                 End Try
             End While
         End Using
-
-        ' Display failed lines, if any
-        If Not String.IsNullOrEmpty(failList.ToString()) Then
-            MessageBox.Show("List of failed lines: " & failList.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
-        Return elementList
+        Return (elementList, guidIndex, lodIndex)
     End Function
 
     ''' <summary>
@@ -223,6 +215,8 @@ Module LoadVerifyedOutputModule
                 {"100", ingestedList.Where(Function(r) r.LOD = "100").ToList()},
                 {"200", ingestedList.Where(Function(r) r.LOD = "200").ToList()},
                 {"300", ingestedList.Where(Function(r) r.LOD = "300").ToList()},
+                {"350", ingestedList.Where(Function(r) r.LOD = "350").ToList()},
+                {"400", ingestedList.Where(Function(r) r.LOD = "400").ToList()},
                 {"notVerified", ingestedList.Where(Function(r) String.IsNullOrEmpty(r.LOD)).ToList()}
                 }
         ' Create the same dict with value as search result
@@ -233,6 +227,13 @@ Module LoadVerifyedOutputModule
 
         Dim activeDoc As Document = Autodesk.Navisworks.Api.Application.ActiveDocument
         Try
+            ' Remove old folder fist
+            For Each item In activeDoc.SelectionSets.Value.ToList()
+                If item.DisplayName = folderName Then
+                    activeDoc.SelectionSets.Remove(item)
+                End If
+            Next
+
             ' Create a folder to group the LoD selection sets
             Dim folderItem As New FolderItem() With {
                 .DisplayName = folderName

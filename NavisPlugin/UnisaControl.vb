@@ -1,8 +1,6 @@
 ﻿Imports System.IO
-Imports System.Text
 Imports System.Windows.Forms
 Imports Autodesk.Navisworks.Api
-Imports Microsoft.VisualBasic.FileIO
 
 
 
@@ -13,6 +11,9 @@ Public Class UnisaControl
     ''' A variable for valid verified elements loaded from csv for sharing between function
     ''' </summary>
     Private Shared CurrIngestedElements As List(Of IngestedElement)
+    Private Shared LodIndex As Integer = -1
+    Private Shared GuidIndex As Integer = -1
+
     Public Sub New()
 
         ' This call is required by the designer.
@@ -115,10 +116,14 @@ Public Class UnisaControl
 
         Try
             ' Ingest elements from the selected CSV file
-            CurrIngestedElements = IngestCsv(CsvFilePath)
+            Dim result As (Content As List(Of IngestedElement), guidIndex As Integer, lodIndex As Integer) = IngestCsv(CsvFilePath)
 
-            ' Take {test2_20241011-105833} from filename {Output_test2_20241011-105833} as folder for selection Sets
-            Dim folderName As String = Path.GetFileName(CsvFilePath).Substring(7)
+            CurrIngestedElements = result.Content
+            LodIndex = result.lodIndex
+            GuidIndex = result.guidIndex
+
+            ' Use output filename as folder for selection Sets
+            Dim folderName As String = Path.GetFileNameWithoutExtension(CsvFilePath)
             CreateLoDSelectionSets(folderName, CurrIngestedElements)
 
             ''' Apply the selection set to the current selection in the document
@@ -162,15 +167,41 @@ Public Class UnisaControl
 
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
 
-        Try
+        ' Ask for confirmation
+        Dim result As DialogResult = MessageBox.Show("You are bulk editing?" & vbNewLine &
+                                                     "Please double check selected elements in before proceeding." & vbNewLine &
+                                                     "There is no undo this action!",
+                                                     "Confirm Bulk Edit", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = DialogResult.No Then
+            ' User confirmed, proceed with bulk editing
+            MessageBox.Show("Bulk editing operation canceled.", "Operation Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
+        If LodIndex < 0 Or GuidIndex < 0 Then
+            MessageBox.Show("Please load a Verified Output first!", "Saving Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+        Dim currentSelection As ModelItemCollection = Autodesk.Navisworks.Api.Application.ActiveDocument.CurrentSelection.SelectedItems
+        Dim selectedElements As New List(Of IngestedElement)()
+        For Each selectItem In currentSelection
+            selectGuid = GetPropertyValueForCSV(selectItem, "Item", "GUID")
             For Each currIngestedElement In CurrIngestedElements
-                If txbGuid.Text = currIngestedElement.GUID Then
+                If selectGuid = currIngestedElement.GUID Then
                     currIngestedElement.LOD = cmbLoD.Text
+                    currIngestedElement.SearchResult = "Verified"
+                    selectedElements.Add(currIngestedElement)
                     Exit For
                 End If
             Next
+        Next
+
+        Try
+            WriteUpdatedLoDtoCSV(selectedElements, txbCsvPath.Text, GuidIndex, LodIndex)
+            CreateLoDSelectionSets(Path.GetFileNameWithoutExtension(txbCsvPath.Text), CurrIngestedElements)
         Catch ex As Exception
-            MessageBox.Show("Not Yet Implemented", "Save")
+            MessageBox.Show(ex.Message)
         End Try
+
+        MessageBox.Show("Bulk editing successfully", "Successful Operation", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 End Class
