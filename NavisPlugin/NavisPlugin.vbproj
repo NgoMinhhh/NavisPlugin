@@ -113,7 +113,7 @@
     <Compile Include="ButtonLogic\LoadVerifyedOutputModule.vb" />
     <Compile Include="ButtonLogic\SetAppDataFolderModule.vb" />
     <Compile Include="ButtonLogic\RunVerifyerModule.vb" />
-    <Compile Include="SaveEditingModule.vb" />
+    <Compile Include="ButtonLogic\SaveEditingModule.vb" />
     <Compile Include="NavisPlugin.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
