@@ -9,6 +9,7 @@
 ## Table of Contents
 - [Overview](#overview)
 - [Features](#features)
+- [Prerequisites](#prerequisites)
 - [Installation](#installation)
   - [Plugin Installation](#plugin-installation)
   - [CLI Application Installation](#cli-application-installation)
@@ -37,6 +38,23 @@ Our solution integrates a user-friendly **Navisworks Manage 2025 plugin** with a
 - **Python CLI Application:**
   - Implements sophisticated LoD verification algorithms.
   - Command-line interface for advanced users and automation scripts.
+
+## Prerequisites
+
+To build, develop, or extend this project, ensure the following prerequisites are satisfied:
+
+### General Requirements
+**Navisworks Manage:** Version 2024 or compatible
+
+### Development Requirements
+1. **Visual Studio:** Required for building the Navisworks plugin (with VB support)
+    -   .Net Framework 4.8 or compatible
+    -   Navisworks SDK v22.0
+2. **Python Packages:**
+    -   pandas v2.2.3
+#### Optional: for building the Python app
+    - pyinstaller 6.10.0
+
 
 ## Installation
 
