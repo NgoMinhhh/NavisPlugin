@@ -41,6 +41,13 @@ Public Class UnisaControl
     ''' </summary>
     Private Sub UpdateInfoTab()
 
+        ' Check if there has been any output loaded
+        Try
+            Dim dummyCheck As Boolean = CurrIngestedElements.Count > 0
+        Catch ex As Exception
+            Exit Sub
+        End Try
+
         ' Reset the display
         txbGuid.Clear()
         cmbStatus.Text = String.Empty
