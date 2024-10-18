@@ -1,4 +1,17 @@
-﻿Imports System.Windows.Forms
+﻿' ====================================================================================
+' File Name     : NavusPlugin.vb
+' Description   : This file is the main entry point
+'                 + UnisaDockPanePlugin: Initialise the docking pane 
+'                 + BasicDockPaneAddin: the button on the Tool Add-in to activate the
+'					the custom dock pane 
+' Authors       : Nhat Minh Ngo, ngonhatminh9898@gmail.com
+'				: Yongzen Guan, guanyongzhen@gmail.com
+'				: Grahi
+'				: Hemel
+' Date Created  : October 2024
+' =====================================================================================
+
+Imports System.Windows.Forms
 Imports Autodesk.Navisworks.Api.Plugins
 
 Namespace UnisaDockPaneAddin

@@ -1,5 +1,5 @@
 ﻿''' <summary>
-''' Represents an element ingested from the CSV file, containing necessary properties.
+''' Represents an element ingested from the CSV file, containing only necessary properties.
 ''' </summary>
 Public Class IngestedElement
     ' Custom class to store only necessary info from CSV

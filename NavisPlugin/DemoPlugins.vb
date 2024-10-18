@@ -5,7 +5,8 @@
 '                 + ExtractPropertiesPlguin: Extracting all properties from currently
 '                                            selecting items
 '                 + CreateSelectionSet: Creating a selection set from a csv input
-' Author        : Nhat Minh Ngo @ UniSA
+' How to Use    : Cop the chosen plugin and paste into NavisPlugin.vb namespace
+' Author        : Nhat Minh Ngo, ngonhatminh9898@gmail.com
 ' Date Created  : October 2024
 ' =====================================================================================
 

@@ -1,3 +1,14 @@
+"""
+Description: This file contains the algorithm for verifying the LoD of elements which properties are extracted from Naviswork Manage
+Credits:
+Developed by: Nhat Minh Ngo, ngonhatminh9898@gmail.com
+            : Yongzen Guan, guanyongzhen@gmail.com
+            : Grahi
+            : Hemel
+Organization: University of South Australia (UniSA)
+"""
+
+
 import argparse
 from pathlib import Path
 import sys
@@ -12,6 +23,8 @@ def main(args=None):
 
         input_csv = args.input
 
+        # Read the extract properties from csv into a master df
+        # Create seperate
         master_df = pd.read_csv(input_csv, index_col=False)
         unique_categories = master_df["Element.Category"].unique()
         filtered_dfs = {
@@ -286,5 +299,5 @@ def process_ceiling(ceilings_df: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    main()
-    # sys.exit(main())
+    # main()
+    sys.exit(main())
