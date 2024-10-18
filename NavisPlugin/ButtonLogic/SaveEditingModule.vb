@@ -1,7 +1,9 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.FileIO
-
+''' <summary>
+''' Provides functionalities to save LoD result from user editing
+''' </summary>
 Module SaveEditingModule
     Public Sub WriteUpdatedLoDtoCSV(ingestedElements As List(Of IngestedElement), oldCsvFilepath As String, guidIndex As Integer, lodIndex As Integer)
 
