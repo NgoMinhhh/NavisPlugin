@@ -6,8 +6,8 @@
 '					the custom dock pane 
 ' Authors       : Nhat Minh Ngo, ngonhatminh9898@gmail.com
 '				: Yongzen Guan, guanyongzhen@gmail.com
-'				: Grahi
-'				: Hemel
+'				: Grahi Brahmbhatt, grahibrahmbhatt0202@gmail.com
+'		        : Hemel Mahfuzul Islam, hkau0127@gmail.com
 ' Date Created  : October 2024
 ' =====================================================================================
 

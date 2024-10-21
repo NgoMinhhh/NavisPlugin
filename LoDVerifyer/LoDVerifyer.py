@@ -3,8 +3,8 @@ Description: This file contains the algorithm for verifying the LoD of elements 
 Credits:
 Developed by: Nhat Minh Ngo, ngonhatminh9898@gmail.com
             : Yongzen Guan, guanyongzhen@gmail.com
-            : Grahi
-            : Hemel
+            : Grahi Brahmbhatt, grahibrahmbhatt0202@gmail.com
+            : Hemel Mahfuzul Islam, hkau0127@gmail.com
 Organization: University of South Australia (UniSA)
 """
 
