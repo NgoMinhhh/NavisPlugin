@@ -44,6 +44,9 @@ Public Class UnisaControl
         ' Check if there has been any output loaded
         Try
             Dim dummyCheck As Boolean = CurrIngestedElements.Count > 0
+            If CurrIngestedElements Is Nothing Then
+                Exit Sub
+            End If
         Catch ex As Exception
             Exit Sub
         End Try

@@ -130,9 +130,9 @@ Partial Class UnisaControl
         Me.lblLoD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblLoD.Location = New System.Drawing.Point(10, 68)
         Me.lblLoD.Name = "lblLoD"
-        Me.lblLoD.Size = New System.Drawing.Size(34, 17)
+        Me.lblLoD.Size = New System.Drawing.Size(37, 17)
         Me.lblLoD.TabIndex = 6
-        Me.lblLoD.Text = "LoD"
+        Me.lblLoD.Text = "LOD"
         Me.lblLoD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txbMissingProperties
@@ -148,7 +148,7 @@ Partial Class UnisaControl
         Me.txbMissingProperties.ReadOnly = True
         Me.txbMissingProperties.Size = New System.Drawing.Size(230, 49)
         Me.txbMissingProperties.TabIndex = 3
-        Me.txbMissingProperties.Text = "No Output is loaded"
+        Me.txbMissingProperties.Text = "No Missing Properties"
         Me.txbMissingProperties.WordWrap = False
         '
         'lblMissingProperpties
@@ -174,7 +174,7 @@ Partial Class UnisaControl
         Me.txbGuid.ReadOnly = True
         Me.txbGuid.Size = New System.Drawing.Size(178, 23)
         Me.txbGuid.TabIndex = 0
-        Me.txbGuid.Text = "No Output is loaded"
+        Me.txbGuid.Text = "34dsaf-3sdf-f3242-1275"
         '
         'lblGuid
         '
